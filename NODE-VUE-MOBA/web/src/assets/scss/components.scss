@@ -1,0 +1,21 @@
+@import './variables';
+
+.menu_title .van-cell {
+  padding: 29px 0 20px 4px;
+}
+.menu_title .van-cell .van-cell__title {
+  font-size: 24px;
+  color: map-get($colors, 'grey');
+}
+.menu_title .van-cell .activity {
+  background: url(../assets/images/sprite3.png) no-repeat 0 0;
+  background-position: 0px -1px;
+  flex: 1;
+  height: 28px;
+}
+.menu_title .van-cell .activity_span {
+  width: 137px;
+  text-align: center;
+  color: map-get($colors, 'light');
+  margin-left: -108px;
+}

@@ -1,0 +1,47 @@
+// 定义颜色
+$colors: (
+ "light": #ec4828,
+ "primary": #555555,
+ "grey": #49657a,
+ "lightGray": #999999,
+ "black": #000000,
+ "white": #fff,
+ "whiteTint": #f9f9f9,
+ "tint": #b8b8b8,
+ "lightTint": #f0f0f0,
+ "lightWhite": #cfcfcf,
+ "brown": #7c3b2e
+);
+
+// 字体大小
+$base-font-size: 1rem;
+$font-sizes: (
+  sm: 0.9231,
+  md: 1,
+  sl: 1.2308,
+  ml: 1.3077,
+  ll: 1.5385,
+  xl: 1.6923,
+  xxl: 1.8462,
+);
+
+$flex-jc: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  between: space-between,
+  around: space-around,
+);
+
+$flex-ai: (
+  start: flex-start,
+  end: flex-end,
+  center: center,
+  stretch: stretch,
+);
+
+// spacing
+$spacing-types: (m: margin, p: padding);
+$spacing-directions: (t: top, r: right, b: bottom, l: left);
+$spacing-base-size: 1rem;
+$spacing-sizes: (0: 0, 1: 0.25, 2: 0.5, 3: 1, 4: 1.5, 5: 3);
