@@ -1,10 +1,13 @@
 const mongoose = require('mongoose')
-const schema = new mongoose.Schema({
-    name: { type: String },
-    items: [{
-        image: { type: String },
-        url: { type: String }
-    }]
+
+const adSchema = new mongoose.Schema({
+  name: { type: String },
+  items: [{
+    img: { type: String },
+    url: { type: String }
+  }]
 })
 
-module.exports = mongoose.model('Ad', schema)
+const Ad = mongoose.model('Ad', adSchema)
+
+module.exports = Ad

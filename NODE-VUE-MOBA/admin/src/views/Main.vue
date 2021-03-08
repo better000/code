@@ -1,67 +1,101 @@
 <template>
   <el-container style="height: 100vh">
-    <el-aside width="200px"
-              style="background-color: rgb(238, 241, 246)">
-      <el-menu router
-               unique-opened
-               :default-active="$route.path">
-        <el-submenu index="1">
-          <template slot="title"><i class="el-icon-message"></i>内容管理</template>
-          <el-menu-item-group>
-            <template slot="title">物品</template>
-            <el-menu-item index="/items/create">新建物品</el-menu-item>
-            <el-menu-item index="/items/list">物品列表</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group>
-            <template slot="title">英雄</template>
-            <el-menu-item index="/heroes/create">新建英雄</el-menu-item>
-            <el-menu-item index="/heroes/list">英雄列表</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group>
-            <template slot="title">文章</template>
-            <el-menu-item index="/articles/create">新建文章</el-menu-item>
-            <el-menu-item index="/articles/list">文章列表</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="2">
-          <template slot="title"><i class="el-icon-message"></i>运营管理</template>
-          <el-menu-item-group>
-            <template slot="title">广告位</template>
-            <el-menu-item index="/ads/create">新建广告位</el-menu-item>
-            <el-menu-item index="/ads/list">广告位列表</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-        <el-submenu index="3">
-          <template slot="title"><i class="el-icon-message"></i>系统设置</template>
-          <el-menu-item-group>
-            <template slot="title">分类</template>
-            <el-menu-item index="/categories/create">新建分类</el-menu-item>
-            <el-menu-item index="/categories/list">分类列表</el-menu-item>
-          </el-menu-item-group>
-          <el-menu-item-group>
-            <template slot="title">管理员</template>
-            <el-menu-item index="/admin_users/create">新建管理员</el-menu-item>
-            <el-menu-item index="/admin_users/list">管理员列表</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-      </el-menu>
-    </el-aside>
+    <!-- 头部 -->
+    <el-header style="text-align: right; font-size: 12px">
+     <div class="logo-title">
+        <img src="../assets/img/home/logo.png" alt="地下城与勇士" height="50px">
+        <h2>地下城与勇士-DNF-后台管理系统</h2>
+     </div>
+      <el-button type="text" size="middle" style="color:grey" @click="loginOut"> <i class="el-icon-switch-button" style="color:#fdb933"></i> 退出</el-button>
+    </el-header>
 
     <el-container>
-      <el-header style="text-align: right; font-size: 12px">
-        <el-dropdown>
-          <i class="el-icon-setting"
-             style="margin-right: 15px"></i>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>
-              <template slot-scope="">
-                <span @click="logout">退出</span>
-              </template>
-            </el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-        <span>{{name}}</span>
-      </el-header>
+      <!-- 侧边栏菜单 -->
+      <el-aside width="201px" style="background-color: #252a40">
+        <el-menu router :default-active="activePath" unique-opened
+        background-color="#252a40" text-color="#fff" active-text-color="#fdb933">
+          <!-- 内容管理一级菜单 -->
+          <el-submenu index="1">
+            <template slot="title">
+              <i class="el-icon-s-fold"></i>分类管理
+            </template>
+            <!-- 内容管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">分类</template>
+              <el-menu-item index="/category">分类列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 物品管理一级菜单 -->
+          <el-submenu index="2">
+            <template slot="title">
+              <i class="el-icon-menu"></i>物品管理
+            </template>
+            <!-- 物品管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">物品</template>
+              <el-menu-item index="/item">物品列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 英雄管理一级菜单 -->
+          <el-submenu index="3">
+            <template slot="title">
+              <i class="el-icon-s-help"></i>英雄管理
+            </template>
+            <!--英雄管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">英雄</template>
+              <el-menu-item
+                :index="$route.path"
+                v-if="$route.path==='/hero/create'||$route.path.indexOf('/hero/edit')!==-1"
+              >{{AddOrEdit}}</el-menu-item>
+              <el-menu-item index="/hero/list">英雄列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 文章管理 -->
+          <el-submenu index="4">
+            <template slot="title">
+              <i class="el-icon-document"></i>文章管理
+            </template>
+            <!--文章管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">文章</template>
+              <el-menu-item
+                :index="$route.path"
+                v-if="$route.path==='/article/create'||$route.path.indexOf('/article/edit')!==-1"
+              >{{AddOrEdit}}</el-menu-item>
+              <el-menu-item index="/article/list">文章列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 广告位管理 -->
+          <el-submenu index="5">
+            <template slot="title">
+              <i class="el-icon-s-opportunity"></i>广告位管理
+            </template>
+            <!--文章管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">广告位</template>
+              <el-menu-item index="/ad/list">广告位列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+
+          <!-- 用户管理 -->
+          <el-submenu index="6">
+            <template slot="title">
+              <i class="el-icon-user"></i>用户管理
+            </template>
+            <!--用户管理二级菜单 -->
+            <el-menu-item-group>
+              <template slot="title">用户</template>
+              <el-menu-item index="/admin_user/list">用户列表</el-menu-item>
+            </el-menu-item-group>
+          </el-submenu>
+        </el-menu>
+      </el-aside>
+      <!-- 内容主体区域 -->
       <el-main>
         <router-view></router-view>
       </el-main>
@@ -71,31 +105,60 @@
 
 <script>
 export default {
+  name: 'Main',
   data() {
     return {
-      name: localStorage.username
+    }
+  },
+  computed: {
+    activePath() {
+      return this.$route.path
+    },
+    AddOrEdit() {
+      if (this.$route.path.indexOf('/hero') !== -1) {
+        if (this.$route.path === '/hero/create') {
+          return '添加英雄'
+        } else if (this.$route.path.indexOf('/hero/edit') !== -1) {
+          return '编辑英雄'
+        }
+      } else {
+        if (this.$route.path === '/article/create') {
+          return '添加文章'
+        } else if (this.$route.path.indexOf('/article/edit') !== -1) {
+          return '编辑文章'
+        }
+      }
+
     }
   },
   methods: {
-    logout () {
-      // 清空登录数据
-      console.log("name")
-      localStorage.removeItem('token')
-      localStorage.removeItem('name')
-      this.$router.push('login')
+    // 退出登陆
+    loginOut() {
+      this.$confirm('是否退出当前账户?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(async () => {
+          window.localStorage.clear()
+          this.$router.push('/login')
+        })
+      
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
 .el-header {
-  background-color: #b3c0d1;
-  color: #333;
-  line-height: 60px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: linear-gradient(#11131f, #252a40);
+  color: #eee;
 }
-
-.el-aside {
-  color: #333;
+.logo-title{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

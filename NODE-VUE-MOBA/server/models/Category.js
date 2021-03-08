@@ -1,7 +1,22 @@
 const mongoose = require('mongoose')
-const schema = new mongoose.Schema({
-    name: { type: String },
-    parent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Category'}
+
+const categorySchema = new mongoose.Schema({
+  name: { type: String },
+  parent: {
+    type: mongoose.SchemaTypes.ObjectId,
+    ref: 'Category',
+    default: null
+  },
+  desc: { type: String }
 })
 
-module.exports = mongoose.model('Category', schema)
+categorySchema.virtual('children', {
+  localField: '_id',
+  foreignField: 'parent',
+  justOne: false,
+  ref: 'Category'
+})
+
+const Category = mongoose.model('Category', categorySchema)
+
+module.exports = Category
