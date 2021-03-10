@@ -43,29 +43,35 @@
 }
 
 // 导航内容
-.van-cell-group {
-  margin: 33px 0px 10px;
+.news ul {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  margin: 15px 0;
+  line-height: 21px;
 }
-.van-cell__value--alone {
-  color: map-get($colors, 'primary');
-  font-size: 16px;
+.news .news_bulletin {
+  line-height: 48px;
   font-weight: bold;
 }
-.news .news_value {
-  padding: 6px 0px;
+.news .news_date {
+  float: right;
 }
-.news .news_value .van-cell__value {
-  color: map-get($colors, 'primary');
-  flex: none;
-  padding-left: 5px;
-}
-.news .news_value .van-cell__title {
+.news .news_name {
+  display: inline-block;
+  text-align: center;
   background: url(../assets/images/sprite1.png) no-repeat 0 0;
-  background-position: 0px 1px;
   width: 49px;
   height: 21px;
-  text-align: center;
-  flex: none;
+  &.news_name_color1 {
+    color: map-get($colors, 'light');
+  }
+  &.news_name_color2 {
+    color: map-get($colors, 'lightGray');
+  }
+  &.news_name_color3 {
+    color: #b52601;
+  }
 }
 
 // 查看更多按钮

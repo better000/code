@@ -1,11 +1,11 @@
 <template>
   <div class="menu_title">
-    <van-cell title="活动中心">
-      <template #right-icon v-if="flase">
+    <van-cell :title="title">
+      <template #right-icon v-if="title === '活动中心'">
         <van-icon class="activity" />
-        <span class="activity_span">活动中心</span>
+        <span class="activity_span">{{title}}</span>
       </template>
-      <template #right-icon>
+      <template #right-icon v-else>
         <span class="more mr-3 text-lightGray">更多 +</span>
       </template>
     </van-cell>
@@ -15,6 +15,9 @@
 
 <script>
 export default {
+  props: {
+    title: { type: String, required: true }
+  },
   data () {
     return {
       active1: 0
