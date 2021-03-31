@@ -32,7 +32,7 @@ const routes = [{
         path: 'item',
         component: () => import('../views/item/Item.vue')
       },
-      //英雄
+      //角色
       {
         path: 'hero/create',
         component: () => import('../views/hero/HeroEdit.vue')
@@ -45,6 +45,20 @@ const routes = [{
       {
         path: 'hero/list',
         component: () => import('../views/hero/HeroList.vue')
+      },
+      //活动
+      {
+        path: 'activity/create',
+        component: () => import('../views/activity/ActivityEdit.vue')
+      },
+      {
+        path: 'activity/edit/:id',
+        component: () => import('../views/activity/ActivityEdit.vue'),
+        props: true
+      },
+      {
+        path: 'activity/list',
+        component: () => import('../views/activity/ActivityList.vue')
       },
       //文章
       {

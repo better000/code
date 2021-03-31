@@ -1,20 +1,15 @@
 <template>
   <div>
     <!-- 顶部 -->
-    <div class="py-1 px-2 d-flex jc-around">
-      <img src="@/assets/images/logo.png"
-           height="37"
-           style="border-right:1px solid #d4d3d3">
-      <img src="@/assets/images/1.png"
-           height="37">
-    </div>
+    <Top></Top>
     <!-- 轮播图 -->
     <div>
       <van-swipe :autoplay="3000">
-        <van-swipe-item v-for="(image, index) in images"
+        <van-swipe-item v-for="(image, index) in swipeList"
                         :key="index">
           <img class="w-100"
-               v-lazy="image" />
+               v-lazy="image.img"
+               @click="clickImg(image.url)"/>
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -25,13 +20,13 @@
           <template #items="{category}">
             <div class="news mt-4 text-primary">
               <ul class="news_bulletin my-3 bg-lightTint text-center fs-ml">
-                <span>{{category.titleName}}</span>
+                <span>{{category.news_list[0].title}}</span>
               </ul>
-              <ul v-for="(news, i) in category.newList" :key="i">
-                <span class="news_date">{{news.date}}</span>
-                <span class="news_name" :class="{news_name_color1:news.categoryName==='公告', news_name_color2:news.categoryName==='社区', news_name_color3:news.categoryName==='赛事'}">{{news.categoryName}}</span>
+              <router-link tag="ul" :to="`/articles/${news._id}`" v-for="(news, i) in category.news_list" :key="i">
+                <span class="news_date">{{news.createdAt | date}}</span>
+                <span class="news_name" :class="{news_name_color1:news.cate_name==='公告', news_name_color2:news.cate_name==='社区', news_name_color3:news.cate_name==='赛事'}">{{news.cate_name}}</span>
                 <span class="mx-1">{{news.title}}</span>
-              </ul>
+              </router-link>
             </div>
           </template>
         </Navbar>
@@ -39,8 +34,42 @@
       </div>
       <!-- 活动中心 -->
       <Menu title="活动中心">
-        <Navbar :categories="newsInformation">
-          <div class="list_title mb-3">
+        <Navbar :categories="actioncenter" class="actions_center">
+          <template #items="{category}">
+            <div class="list_title mb-3">
+              <div class="list_details_title bg-whiteTint text-primary my-3 text-center">
+                <span>活动名称</span>
+                <span>主要奖励</span>
+                <span>结束时间</span>
+                <span></span>
+              </div>
+              <van-swipe class="list_details"
+                       style="height: 200px;"
+                       :loop="false"
+                       :height="42"
+                       vertical>
+                <van-swipe-item v-for="(actions, i) in category.action_list" :key="i">
+                  <li class="text-center w-100 text-primary">
+                    <p>{{actions.action_name}}</p>
+                    <p>
+                      <img src="@/assets/images/activity1.png" />
+                      <img src="@/assets/images/activity1.png" />
+                      <img src="@/assets/images/activity1.png" />
+                      <img src="@/assets/images/activity1.png" />
+                    </p>
+                    <p class="text-light">{{actions.action_date}}</p>
+                    <p><img src="@/assets/images/sprite4.png" /></p>
+                  </li>
+                </van-swipe-item>
+                <template #indicator>
+                <div class="list_details_indicator">
+                  <div class="list_details_indicator_actives"></div>
+                </div>
+              </template>
+            </van-swipe>
+            </div>
+          </template>
+<!--           <div class="list_title mb-3">
             <div class="list_details_title bg-whiteTint text-primary my-3 text-center">
               <span>活动名称</span>
               <span>主要奖励</span>
@@ -175,7 +204,7 @@
                 </div>
               </template>
             </van-swipe>
-          </div>
+          </div> -->
         </Navbar>
       </Menu>
       <!-- 视频推荐 -->
@@ -204,7 +233,16 @@
       <!-- 图文推荐 -->
       <Menu title="图文推荐">
         <div>
-          <ul class="tw_list mb-3">
+          <ul class="tw_list mb-3" v-for="(images, i) in TextImgList" :key="i">
+            <img class="w-100"
+                 :src="images.img">
+            <div class="tw_text">
+              <span class="tw_text_title text-white fs-ll mb-3">女神枪手三次觉醒百科</span>
+              <span class="fs-sl text-tint my-3">配装加点一应俱全</span>
+              <span class="tw_text_btn text-center text-light my-2" @click="clickImg(images.url)">查看</span>
+            </div>
+          </ul>
+<!--           <ul class="tw_list mb-3">
             <img class="w-100"
                  src="@/assets/images/picture2.png">
             <div class="tw_text">
@@ -212,16 +250,7 @@
               <span class="fs-sl text-tint my-3">配装加点一应俱全</span>
               <span class="tw_text_btn text-center text-light my-2">查看</span>
             </div>
-          </ul>
-          <ul class="tw_list mb-3">
-            <img class="w-100"
-                 src="@/assets/images/picture2.png">
-            <div class="tw_text">
-              <span class="tw_text_title text-white fs-ll mb-3">女神枪手三次觉醒百科</span>
-              <span class="fs-sl text-tint my-3">配装加点一应俱全</span>
-              <span class="tw_text_btn text-center text-light my-2">查看</span>
-            </div>
-          </ul>
+          </ul> -->
         </div>
       </Menu>
       <!-- 明星主播 -->
@@ -259,9 +288,9 @@
         <div class="mode">
           <ul class="mode_pic d-flex jc-between">
             <img class="w-49"
-                 src="@/assets/images/picture6.jpg">
-            <img class="w-49"
-                 src="@/assets/images/picture6.jpg">
+                 v-for="(images, i) in anchorAds" :key="i"
+                 :src="images.img"
+                 @click="clickImg(images.url)">
           </ul>
           <ul class="mode_news my-4 text-primary">
             <li class="mode_news_list mb-3">永恒大陆巨龙副本小技巧总结，知道这些做装备更轻松</li>
@@ -274,9 +303,9 @@
       <Menu title="品牌专区">
         <div class="brand">
           <img class="w-100"
-               src="@/assets/images/pic1.jpeg">
-          <img class="w-100"
-               src="@/assets/images/pic1.jpeg">
+               v-for="(images, i) in Brandlist" :key="i"
+               :src="images.img"
+               @click="clickImg(images.url)">
         </div>
       </Menu>
       <!-- 底部 -->
@@ -289,75 +318,121 @@
 </template>
 
 <script>
+import Top from '../components/topTitle.vue'
 import Menu from '../components/menuTitle.vue'
 import Navbar from '../components/navigationBar.vue'
+import dayjs from 'dayjs'
 export default {
   components: {
+    Top,
     Menu,
     Navbar
   },
+  filters: {
+    date (val) {
+      return dayjs(val).format('MM/DD')
+    }
+  },
   data () {
     return {
-      images: [
-        require('@/assets/images/swipe1.jpeg'),
-        require('@/assets/images/swipe2.jpeg'),
-        require('@/assets/images/swipe3.jpeg'),
-        require('@/assets/images/swipe4.jpeg'),
-        require('@/assets/images/swipe5.jpeg'),
-        require('@/assets/images/swipe6.jpeg'),
-        require('@/assets/images/swipe7.jpeg'),
-        require('@/assets/images/swipe8.jpeg'),
-        require('@/assets/images/swipe9.jpeg')
-      ],
       active: 0,
-      newsInformation: [
+      newsInformation: [],
+      swipeList: '',
+      anchorAds: '',
+      Brandlist: '',
+      TextImgList: '',
+      actioncenter: [
         {
-          name: '综合',
-          titleName: '[2021年2月]盛开！天界玫瑰 女神枪手三觉登场！',
-          newList: new Array(6).fill(1).map((v) => ({
-            categoryName: '公告',
-            title: '3月4日 早5点停机更新公告',
-            date: '03/03'
+          name: '热门推荐',
+          action_list: new Array(10).fill(1).map((v) => ({
+            action_name: '2021新春礼包',
+            action_rewards: 'src="@/assets/images/activity1.png"',
+            action_date: '11天后结束'
           }))
         },
         {
-          name: '公告',
-          titleName: '3月4日 早5点停机更新公告',
-          newList: new Array(6).fill(1).map((v) => ({
-            categoryName: '公告',
-            title: '3月4日 早5点停机更新公告',
-            date: '03/03'
+          name: '新手升级',
+          action_list: new Array(10).fill(1).map((v) => ({
+            action_name: '2022新春礼包',
+            action_rewards: 'src="@/assets/images/activity1.png"',
+            action_date: '11天后结束'
           }))
         },
         {
-          name: '活动',
-          titleName: '国潮许愿开启，国风装扮、镜花水月光环限时抢！',
-          newList: new Array(6).fill(1).map((v) => ({
-            categoryName: '活动',
-            title: '好礼天天见 每天签到就有+7增幅券和纯净黄金书拿！',
-            date: '02/24'
+          name: '周常活动',
+          action_list: new Array(10).fill(1).map((v) => ({
+            action_name: '2023新春礼包',
+            action_rewards: 'src="@/assets/images/activity1.png"',
+            action_date: '11天后结束'
           }))
         },
         {
-          name: '社区',
-          titleName: '新版本回归勇士福利一览，快速跟上版本步伐不是问题!',
-          newList: new Array(6).fill(1).map((v) => ({
-            categoryName: '社区',
-            title: '永恒大陆特殊奖励不知在哪拿，这份阿拉德探险记攻略请收好',
-            date: '02/08'
+          name: '商城特惠',
+          action_list: new Array(10).fill(1).map((v) => ({
+            action_name: '2024新春礼包',
+            action_rewards: 'src="@/assets/images/activity1.png"',
+            action_date: '11天后结束'
           }))
         },
         {
-          name: '赛事',
-          titleName: '嗨战冬日，巅峰对决!虎牙大师杯电竞赛火热来袭',
-          newList: new Array(6).fill(1).map((v) => ({
-            categoryName: '赛事',
-            title: '2020DNF嘉年华落地武汉 F1天王赛即将开战',
-            date: '12/10'
+          name: '合作活动',
+          action_list: new Array(10).fill(1).map((v) => ({
+            action_name: '2025新春礼包',
+            action_rewards: 'src="@/assets/images/activity1.png"',
+            action_date: '11天后结束'
           }))
         }
       ]
     }
+  },
+
+  methods: {
+    // 获取新闻信息
+    async fetchNewsCats () {
+      const res = await this.$http.get('news')
+      this.newsInformation = res.data
+    },
+
+    // 获取轮播图信息
+    async fetchSwipe () {
+      const res = await this.$http.get('ads')
+      const data = res.data.find(item => item.name === '轮播图')
+      this.swipeList = JSON.parse(JSON.stringify(data.items))
+    },
+
+    // 点击轮播图跳转外部链接
+    clickImg (src) {
+      window.location.href = src
+    },
+
+    // 获取主播栏广告信息
+    async fetchAnchorAds () {
+      const res = await this.$http.get('ads')
+      const data = res.data.find(item => item.name === '主播栏广告')
+      this.anchorAds = JSON.parse(JSON.stringify(data.items))
+    },
+
+    // 获取品牌专区信息
+    async fetchBrandAds () {
+      const res = await this.$http.get('ads')
+      const data = res.data.find(item => item.name === '品牌专区')
+      this.Brandlist = JSON.parse(JSON.stringify(data.items))
+    },
+
+    // 获取品牌专区信息
+    async fetchTextImg () {
+      const res = await this.$http.get('ads')
+      const data = res.data.find(item => item.name === '图文推荐')
+      this.TextImgList = JSON.parse(JSON.stringify(data.items))
+    }
+  },
+
+  created () {
+    this.fetchNewsCats()
+    this.fetchSwipe()
+    this.fetchBrandAds()
+    this.fetchAnchorAds()
+    this.fetchTextImg()
   }
 }
 </script>

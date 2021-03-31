@@ -45,7 +45,7 @@ module.exports = app => {
     res.send(data)
   })
 
-  // 英雄攻略接口
+  // 角色攻略接口
   router.get('/hero_strategies/:id', async (req, res) => {
     const hero = await Hero.findById(req.params.id).populate('cate').lean()
 
@@ -210,7 +210,7 @@ module.exports = app => {
 
     cates.unshift({
       id: "001",
-      name: "英雄攻略",
+      name: "角色攻略",
       heros
     })
 

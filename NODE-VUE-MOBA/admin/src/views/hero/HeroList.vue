@@ -1,16 +1,16 @@
 <template>
   <div>
-    <breadcrumb text="英雄列表" />
+    <breadcrumb text="角色列表" />
     <el-card>
       <el-row>
         <el-col :span="6">
-          <el-input  maxlength="8" clearable placeholder="请输入英雄名称" v-model="heroQuery"></el-input>
+          <el-input  maxlength="8" clearable placeholder="请输入角色名称" v-model="heroQuery"></el-input>
         </el-col>
         <el-col :span="3">
           <el-button style="margin-left:20px" type="primary" icon="el-icon-search" @click="searchHero">搜索</el-button>
         </el-col>
         <el-col :span="4" >
-          <el-button type="primary" icon="el-icon-plus" @click="addHeroClick">添加英雄</el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="addHeroClick">添加角色</el-button>
         </el-col>
       </el-row>
       
@@ -26,8 +26,8 @@
           </template>
         </el-table-column>
         <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column label="英雄名称" prop="name"></el-table-column>
-        <el-table-column label="英雄称号" prop="title"></el-table-column>
+        <el-table-column label="角色名称" prop="name"></el-table-column>
+        <el-table-column label="角色称号" prop="title"></el-table-column>
         <el-table-column label="所属分类" border stripe>
           <template slot-scope="scope">
             <span>{{scope.row.cate.map(item => item.name).join('/')}}</span>
@@ -71,7 +71,7 @@ export default {
   },
   data() {
     return {
-      //英雄列表数据
+      //角色列表数据
       heroList: [],
       // 分页数据
       pageParams: {
@@ -83,22 +83,22 @@ export default {
     }
   },
   methods: {
-    //请求英雄列表数据
+    //请求角色列表数据
     async getHeroList() {
       const res = await getHeroList(this.pageParams)
       this.total = res.data.total
       this.heroList = res.data.data
     },
-    // 添加英雄
+    // 添加角色
     addHeroClick() {
       this.$router.push('/hero/create')
     },
-    //监听编辑英雄按钮
+    //监听编辑角色按钮
     async edit(row) {
       const res = await getHero(row._id)
       this.$router.push(`/hero/edit/${row._id}`)
     },
-    //监听删除英雄按钮
+    //监听删除角色按钮
     async _delete(row) {
       try {
 

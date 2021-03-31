@@ -1,21 +1,21 @@
 <template>
   <div>
-    <breadcrumb :text="id?'编辑英雄':'添加英雄'" />
+    <breadcrumb :text="id?'编辑角色':'添加角色'" />
     <el-card>
       <el-form label-width="100px">
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
-            <!-- 英雄名称 -->
-            <el-form-item label="英雄名称">
+            <!-- 角色名称 -->
+            <el-form-item label="角色名称">
               <el-input v-model="model.name"></el-input>
             </el-form-item>
-            <!-- 英雄称号 -->
-            <el-form-item label="英雄称号">
+            <!-- 角色称号 -->
+            <el-form-item label="角色称号">
               <el-input v-model="model.title"></el-input>
             </el-form-item>
-            <!-- 英雄类型 -->
-            <el-form-item label="英雄定位" v-if="heroCateList">
-              <el-select v-model="model.cate" placeholder="请选择英雄分类" multiple>
+            <!-- 角色类型 -->
+            <el-form-item label="角色定位" v-if="heroCateList">
+              <el-select v-model="model.cate" placeholder="请选择角色分类" multiple>
                 <el-option v-for="item in heroCateList" :label="item.name" :key="item._id" :value="item._id">
                 </el-option>
               </el-select>
@@ -37,8 +37,8 @@
             <el-form-item label="生存">
               <el-rate show-score :max="10" v-model="model.scores.survive"></el-rate>
             </el-form-item>
-            <!-- 英雄头像 -->
-            <el-form-item label="英雄头像">
+            <!-- 角色头像 -->
+            <el-form-item label="角色头像">
               <el-upload class="avatar-uploader" :action="action+'hero'" :headers="token" :show-file-list="false"
                 :on-success="res=>$set(model,'avatar',res.url)" :on-error="uploadErrHandler">
                 <img v-if="model.avatar" :src="model.avatar" class="avatar" />
@@ -64,7 +64,7 @@
 
           </el-tab-pane>
 
-          <el-tab-pane label="英雄皮肤">
+          <el-tab-pane label="角色皮肤">
             <el-button type="primary" size="small" @click="addSkins">+ 添加皮肤</el-button>
             <el-row :gutter="20" type="flex" style="flex-wrap: wrap">
               <el-col v-for="(item,i) in model.skins" :key="i" :span="12">
@@ -181,16 +181,16 @@
             </el-row>
           </el-tab-pane>
 
-          <el-tab-pane label="英雄关系">
+          <el-tab-pane label="角色关系">
             <el-tabs value="basic">
               <el-tab-pane label="最佳搭档" name="basic">
-                <el-button type="primary" size="small" @click="model.partners.push({})">+ 添加英雄</el-button>
+                <el-button type="primary" size="small" @click="model.partners.push({})">+ 添加角色</el-button>
                 <el-row :gutter="20" type="flex" style="flex-wrap: wrap">
                   <el-col v-for="(item,i) in model.partners" :key="i" :span="12">
                     <el-card>
-                      <el-tag>英雄{{i+1}}</el-tag>
-                      <el-form-item label="英雄名称" label-width="80px">
-                        <el-select v-model="item.hero" filterable placeholder="请选择英雄">
+                      <el-tag>角色{{i+1}}</el-tag>
+                      <el-form-item label="角色名称" label-width="80px">
+                        <el-select v-model="item.hero" filterable placeholder="请选择角色">
                           <el-option v-for="item in heroList" :key="item._id" :label="item.name" :value="item._id">
                           </el-option>
                         </el-select>
@@ -204,13 +204,13 @@
                 </el-row>
               </el-tab-pane>
               <el-tab-pane label="被谁克制">
-                <el-button type="primary" size="small" @click="model.restrained.push({})">+ 添加英雄</el-button>
+                <el-button type="primary" size="small" @click="model.restrained.push({})">+ 添加角色</el-button>
                 <el-row :gutter="20" type="flex" style="flex-wrap: wrap">
                   <el-col v-for="(item,i) in model.restrained" :key="i" :span="12">
                     <el-card>
-                      <el-tag>英雄{{i+1}}</el-tag>
-                      <el-form-item label="英雄名称" label-width="80px">
-                        <el-select v-model="item.hero" filterable placeholder="请选择英雄">
+                      <el-tag>角色{{i+1}}</el-tag>
+                      <el-form-item label="角色名称" label-width="80px">
+                        <el-select v-model="item.hero" filterable placeholder="请选择角色">
                           <el-option v-for="item in heroList" :key="item._id" :label="item.name" :value="item._id">
                           </el-option>
                         </el-select>
@@ -224,13 +224,13 @@
                 </el-row>
               </el-tab-pane>
               <el-tab-pane label="克制谁">
-                <el-button type="primary" size="small" @click="model.restraint.push({})">+ 添加英雄</el-button>
+                <el-button type="primary" size="small" @click="model.restraint.push({})">+ 添加角色</el-button>
                 <el-row :gutter="20" type="flex" style="flex-wrap: wrap">
                   <el-col v-for="(item,i) in model.restraint" :key="i" :span="12">
                     <el-card>
-                      <el-tag>英雄{{i+1}}</el-tag>
-                      <el-form-item label="英雄名称" label-width="80px">
-                        <el-select v-model="item.hero" filterable placeholder="请选择英雄">
+                      <el-tag>角色{{i+1}}</el-tag>
+                      <el-form-item label="角色名称" label-width="80px">
+                        <el-select v-model="item.hero" filterable placeholder="请选择角色">
                           <el-option v-for="item in heroList" :key="item._id" :label="item.name" :value="item._id">
                           </el-option>
                         </el-select>
@@ -289,7 +289,7 @@
     data() {
       return {
         value: [],
-        //英雄数据
+        //角色数据
         model: {
           avatar: '',
           photo: '',
@@ -309,21 +309,21 @@
       }
     },
     methods: {
-      // 保存新建或者编辑的英雄
+      // 保存新建或者编辑的角色
       async save() {
         if (!this.id) {
           const res = await createHero(this.model)
           if (!res) return
-          this.$message.success('新建英雄成功')
+          this.$message.success('新建角色成功')
           this.$router.push('/hero/list')
         } else {
           const res = await updateHero(this.id, this.model)
           if (!res) return
-          this.$message.success('编辑英雄成功')
+          this.$message.success('编辑角色成功')
           this.$router.push('/hero/list')
         }
       },
-      //处于编辑模式下，通过id查找需要编辑的英雄
+      //处于编辑模式下，通过id查找需要编辑的角色
       async getHero() {
         const res = await getHero(this.id)
         this.model = res.data
@@ -337,7 +337,7 @@
       async getCateList() {
         const res = await getCateList()
         for (let item of res.data) {
-          if (item.name === '英雄列表') {
+          if (item.name === '角色列表') {
             this.heroCateList = item.children
             break
           }
@@ -369,7 +369,7 @@
       deleteVideo(i) {
         this.model.skins.splice(i, 1)
       },
-      // 获取英雄列表
+      // 获取角色列表
       async getHeroList() {
         const res = await getHeroList()
         if (!res) return

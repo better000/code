@@ -3,9 +3,7 @@ const mongoose = require('mongoose')
 const articleSchema = new mongoose.Schema({
   title: { type: String },
   cate: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Category' }],
-  url: { type: String },
-  date: { type: String },
-  content: { type: String }
+  body: { type: String }
 }, {
   timestamps: true
 })

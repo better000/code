@@ -20,7 +20,7 @@
           <el-input v-model="model.title"></el-input>
         </el-form-item>
         <el-form-item label="内容">
-          <vue-editor v-model="model.content" useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
+          <vue-editor v-model="model.body" useCustomImageHandler @image-added="handleImageAdded"></vue-editor>
         </el-form-item>
         <el-form-item>
           <el-button   type="primary" native-type="submit">保存</el-button>

@@ -1,24 +1,25 @@
 <template>
   <div>
-    <breadcrumb text="装备列表" />
+    <breadcrumb text="物品列表" />
     <el-card>
-      <el-button   type="primary" icon="el-icon-plus" @click="addItemClick">添加装备</el-button>
+      <el-button   type="primary" icon="el-icon-plus" @click="addItemClick">添加物品</el-button>
       <!-- 列表 -->
       <el-table :data="itemList" border stripe>
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <div>{{scope.row.desc}}</div>
+            <!-- <div>{{scope.row.desc}}</div> -->
             <div class="item-detail">{{scope.row.detail}}</div>
           </template>
         </el-table-column>
         <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column label="装备名称" prop="name"></el-table-column>
+        <el-table-column label="物品名称" prop="name"></el-table-column>
         <el-table-column label="图标">
           <template slot-scope="scope">
             <img class="item-icon" :src="scope.row.icon" />
           </template>
         </el-table-column>
-        <el-table-column label="星级" prop="star"></el-table-column>
+        <!-- <el-table-column label="星级" prop="star"></el-table-column> -->
+        <el-table-column label="物品简介" prop="desc"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
             <el-button size="mini" type="primary" icon="el-icon-edit" @click="edit(scope.row)">编辑</el-button>
@@ -39,7 +40,7 @@
     </el-card>
     <!-- 对话框 -->
     <el-dialog
-      :title="!this.formData._id?'添加装备':'编辑装备'"
+      :title="!this.formData._id?'添加物品':'编辑物品'"
       :visible.sync="dialogVisible"
       width="50%"
       @closed="dialogClose"
@@ -62,9 +63,9 @@
             <i v-else class="el-icon-plus avatar-uploader-icon"></i>
           </el-upload>
         </el-form-item>
-        <el-form-item label="星级">
+<!--         <el-form-item label="星级">
           <el-rate show-score :max="3" v-model="formData.star"></el-rate>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="物品简介">
           <el-input v-model="formData.desc"></el-input>
         </el-form-item>
@@ -84,13 +85,9 @@
 <script>
 //导入网络请求函数
 import axios from 'axios'
-
 import { getItemList, createItem, getItem, updateItem, deleteItem } from 'network/admin/item'
-
 import { uploadMixin } from '../../common/mixins'
-
 import Breadcrumb from '../../components/commom/Breadcrumb'
-
 export default {
   name: "ItemList",
   mixins: [uploadMixin],
@@ -125,46 +122,41 @@ export default {
       this.id = row._id
       const res = await getItem(row._id)
       if (!res) return
-      res.data.star = Number(res.data.star)
+      // res.data.star = Number(res.data.star)
       this.formData = res.data
       this.dialogVisible = true
     },
     //监听删除物品按钮
     async _delete(row) {
       try {
-
         await this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
           confirmButtonText: '确定',
           cancelButtonText: '取消',
           type: 'warning'
         })
-
         const res = await deleteItem(row._id)
         if (!res) return 
         this.$message.success(res.data.message)
         this.getItemList()
-
       } catch (error) {
         this.$message.info('已取消删除')
       }
-
     },
-    //添加装备
+    //添加物品
     async addItemClick() {
       this.dialogVisible = true
     },
     async ok() {
-
       if (!this.formData._id) {
         const res = await createItem(this.formData)
-        if (!res) return this.$message.error('装备添加失败')
-        this.$message.success('装备添加成功')
+        if (!res) return this.$message.error('物品添加失败')
+        this.$message.success('物品添加成功')
         this.getItemList()
         this.dialogVisible = false
       } else {
         const res = await updateItem(this.id, this.formData)
-        if (!res) return this.$message.error('装备编辑失败')
-        this.$message.success('装备编辑成功')
+        if (!res) return this.$message.error('物品编辑失败')
+        this.$message.success('物品编辑成功')
         this.getItemList()
         this.dialogVisible = false
       }

@@ -9,7 +9,7 @@ module.exports = app => {
   // const Item = mongoose.model('Item')
   const Strategy = mongoose.model('Strategy')
 
-  app.use('/web/api/home', router)
+  app.use('/web/api', router)
 
   //轮播图接口
   router.get('/ads', async (req, res) => {
@@ -45,24 +45,24 @@ module.exports = app => {
       },
       {
         $addFields: {
-          news_list: { $slice: ['$news_list', 5] }
+          news_list: { $slice: ['$news_list', 6] }
         }
       }
     ])
     subCates = cats.map(item => {
       return item._id
     })
-    // 在最前面插入热门分类
+    // 在最前面插入综合分类
     cats.unshift({
-      name: '热门',
+      name: '综合',
       news_list: await Article.find().populate('cate').where({
         cate: { $in: subCates }
-      }).limit(5).lean()
+      }).limit(6).lean()
     })
-    //判断分类是否为热门，如果为热门，则直接取该分类名
+    //判断分类是否为综合，如果为综合，则直接取该分类名
     cats.map(cat => {
       cat.news_list.map(news => {
-        news.cate_name = cat.name === '热门' ? news.cate[0].name : cat.name
+        news.cate_name = cat.name === '综合' ? news.cate[0].name : cat.name
         return news
       })
       return cat
@@ -70,15 +70,15 @@ module.exports = app => {
     res.send(cats)
   })
 
-  // 英雄列表数据请求接口
+  // 角色列表数据请求接口
   router.get('/heros', async (req, res) => {
     // const cates = await Category.findOne({
-    //   name: '英雄列表'
+    //   name: '角色列表'
     // }).populate({
     //   path: 'children'
     // }).lean()
 
-    const parent = await Category.findOne({ name: '英雄列表' })
+    const parent = await Category.findOne({ name: '角色列表' })
     const cates = await Category.aggregate([
       { $match: { parent: parent._id } },
       {
@@ -92,7 +92,7 @@ module.exports = app => {
     ])
     // const subCates = cates.map(cate => cate._id)
     // cates.unshift({
-    //   name: '热门',
+    //   name: '综合',
     //   hero_list: await Hero.find().where({
     //     cate: { $in: subCates }
     //   }).limit(10).lean()
@@ -101,15 +101,19 @@ module.exports = app => {
   })
 
   //根据id获取文章详情
-  router.get('/article/:id', async (req, res) => {
+/*   router.get('/article/:id', async (req, res) => {
     const model = await Article.findById(req.params.id).lean()
     model.related = await Article.find().where({
       cate: { $in: model.cate }
     }).skip(1).limit(2)
     res.send(model)
+  }) */
+  router.get('/articles/:id', async (req, res) => {
+    const data = await Article.findById(req.params.id)
+    res.send(data)
   })
 
-  // 根据id获取单个英雄数据
+  // 根据id获取单个角色数据
   router.get('/hero/:id', async (req, res) => {
     res.send(await Hero.findById(req.params.id).populate('cate downWind.equipment upWind.equipment partners.hero restrained.hero restraint.hero'))
   })
@@ -137,20 +141,20 @@ module.exports = app => {
     // 赛事精品数据
     const raceBoutique = await Strategy.find({ cate: { $elemMatch: { $eq: newest[1]._id } } }).limit(4)
 
-    // 获取英雄攻略数据
-    // const hotParent = await Category.find({ name: '英雄列表' })
+    // 获取角色攻略数据
+    // const hotParent = await Category.find({ name: '角色列表' })
     // const hot = await Category.find().where({
-    //   name: '热门',
+    //   name: '综合',
     //   parent: hotParent[0]._id
     // })
     // const hotHero = await Hero.find({ cate: { $elemMatch: { $eq: hot[0]._id } } })
     const hotHero = await Hero.find({ name: '后羿' })
 
-    // 英雄攻略数据
+    // 角色攻略数据
     const heroStrategy = await Strategy.find({ heros: { $elemMatch: { $eq: hotHero[0]._id } } }).limit(4)
 
     const finalData = [[...BoutiqueSectionData], [...heroStrategy], [...raceBoutique], [...raceVideoData]]
-    const wonderfulVideoData = ['精品栏目', '英雄攻略', '赛事精品', '赛事视频'].map((item, i) => {
+    const wonderfulVideoData = ['精品栏目', '角色攻略', '赛事精品', '赛事视频'].map((item, i) => {
       return {
         name: item,
         videos: finalData[i]
