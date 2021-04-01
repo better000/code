@@ -37,9 +37,9 @@ module.exports = app => {
     const total = await req.Model.countDocuments()
     let data
     if (req.query.query) {
-      data = await req.Model.find({ name: req.query.query }).skip(skipNum).limit(pagesize).populate('cate')
+      data = await req.Model.find({ name: req.query.query }).skip(skipNum).limit(pagesize).populate('cate').populate('reward')
     } else {
-      data = await req.Model.find().skip(skipNum).limit(pagesize).populate('cate')
+      data = await req.Model.find().skip(skipNum).limit(pagesize).populate('cate').populate('reward')
     }
     res.send({
       total,

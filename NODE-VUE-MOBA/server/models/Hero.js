@@ -6,7 +6,7 @@ const heroSchema = new mongoose.Schema({
   banner: { type: String },
   title: { type: String },
   photo:{ type: String },// 图文介绍
-  //类型,如：坦克，射手等
+  //类型
   cate: [{ type: mongoose.SchemaTypes.ObjectId, ref: 'Category' }],
   //难度等级等
   scores: {

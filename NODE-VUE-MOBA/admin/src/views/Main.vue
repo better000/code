@@ -124,43 +124,19 @@
                 <!-- 玩家管理二级菜单 -->
                 <el-menu-item-group>
                   <template slot="title">玩家</template>
-                  <el-menu-item>玩家列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-
-              <!-- 论坛管理一级菜单 -->
-              <el-submenu index="2-2">
-                <template slot="title">
-                  <i class="el-icon-chat-line-square"></i>论坛管理
-                </template>
-                <!-- 论坛管理二级菜单 -->
-                <el-menu-item-group>
-                  <template slot="title">论坛</template>
-                  <el-menu-item>论坛列表</el-menu-item>
-                </el-menu-item-group>
-              </el-submenu>
-
-              <!-- 创作管理一级菜单 -->
-              <el-submenu index="2-3">
-                <template slot="title">
-                  <i class="el-icon-edit"></i>创作管理
-                </template>
-                <!--创作管理二级菜单 -->
-                <el-menu-item-group>
-                  <template slot="title">创作</template>
-                  <el-menu-item>创作列表</el-menu-item>
+                  <el-menu-item index="/player/list">玩家列表</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
 
               <!-- 工单管理一级菜单 -->
-              <el-submenu index="2-4">
+              <el-submenu index="2-2">
                 <template slot="title">
                   <i class="el-icon-document-delete"></i>工单管理
                 </template>
                 <!--工单管理二级菜单 -->
                 <el-menu-item-group>
                   <template slot="title">工单</template>
-                  <el-menu-item>工单列表</el-menu-item>
+                  <el-menu-item index="/workOrder/list">工单列表</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
             </el-menu-item-group>
@@ -203,11 +179,17 @@ export default {
         } else if (this.$route.path.indexOf('/hero/edit') !== -1) {
           return '编辑角色'
         }
-      } else {
+      } else if (this.$route.path.indexOf('/article') !== -1) {
         if (this.$route.path === '/article/create') {
           return '添加文章'
         } else if (this.$route.path.indexOf('/article/edit') !== -1) {
           return '编辑文章'
+        }
+      } else {
+        if (this.$route.path === '/activity/create') {
+          return '添加活动'
+        } else if (this.$route.path.indexOf('/activity/edit') !== -1) {
+          return '编辑活动'
         }
       }
     },

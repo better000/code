@@ -6,11 +6,11 @@
         <el-tabs type="border-card">
           <el-tab-pane label="基本信息">
             <!-- 角色名称 -->
-            <el-form-item label="角色名称">
+            <el-form-item label="角色职业">
               <el-input v-model="model.name"></el-input>
             </el-form-item>
             <!-- 角色称号 -->
-            <el-form-item label="角色称号">
+            <el-form-item label="角色觉醒">
               <el-input v-model="model.title"></el-input>
             </el-form-item>
             <!-- 角色类型 -->
@@ -26,15 +26,15 @@
               <el-rate show-score :max="10" v-model="model.scores.difficulty"></el-rate>
             </el-form-item>
             <!-- 技能 -->
-            <el-form-item label="技能">
+            <el-form-item label="升级">
               <el-rate show-score :max="10" v-model="model.scores.skill"></el-rate>
             </el-form-item>
             <!-- 攻击 -->
-            <el-form-item label="攻击">
+            <el-form-item label="伤害">
               <el-rate show-score :max="10" v-model="model.scores.attack"></el-rate>
             </el-form-item>
             <!-- 生存 -->
-            <el-form-item label="生存">
+            <el-form-item label="血量">
               <el-rate show-score :max="10" v-model="model.scores.survive"></el-rate>
             </el-form-item>
             <!-- 角色头像 -->
@@ -64,23 +64,23 @@
 
           </el-tab-pane>
 
-          <el-tab-pane label="角色皮肤">
-            <el-button type="primary" size="small" @click="addSkins">+ 添加皮肤</el-button>
+          <el-tab-pane label="角色时装">
+            <el-button type="primary" size="small" @click="addSkins">+ 添加时装</el-button>
             <el-row :gutter="20" type="flex" style="flex-wrap: wrap">
               <el-col v-for="(item,i) in model.skins" :key="i" :span="12">
                 <el-card>
-                  <el-tag>皮肤{{i+1}}</el-tag>
-                  <el-form-item label="皮肤名称" label-width="80px">
+                  <el-tag>时装{{i+1}}</el-tag>
+                  <el-form-item label="时装名称" label-width="80px">
                     <el-input v-model="item.name"></el-input>
                   </el-form-item>
-                  <el-form-item label="皮肤图片" label-width="80px">
+                  <el-form-item label="时装图片" label-width="80px">
                     <el-upload class="avatar-uploader" :action="action+'skin'" :headers="token" :show-file-list="false"
                       :on-success="res => $set(item, 'img', res.url)" :on-error="uploadErrHandler">
                       <img v-if="item.img" :src="item.img" class="banner" />
                       <i v-else class="el-icon-plus avatar-uploader-icon"></i>
                     </el-upload>
                   </el-form-item>
-                  <el-button type="danger" @click="deleteSkin(i)">删除皮肤</el-button>
+                  <el-button type="danger" @click="deleteSkin(i)">删除时装</el-button>
                 </el-card>
               </el-col>
             </el-row>
@@ -355,14 +355,14 @@
       deleteSkill(i) {
         this.model.skills.splice(i, 1)
       },
-      //监听添加皮肤按钮
+      //监听添加时装按钮
       addSkins() {
         this.model.skins.push({})
       },
       deleteSkin(i) {
         this.model.skins.splice(i, 1)
       },
-      //监听添加皮肤按钮
+      //监听添加时装按钮
       addVideos() {
         this.model.skins.push({})
       },

@@ -11,10 +11,12 @@
           </template>
         </el-table-column>
         <el-table-column label="活动名称" prop="title"></el-table-column>
-        <el-table-column width="350px" label="主要奖励" prop="reward">
-<!--           <template slot-scope="scope">
-            <img :src="scope.row.icon" />
-          </template> -->
+        <el-table-column label="主要奖励">
+          <template slot-scope="scope">
+            <div v-for="item in scope.row.reward" :key="item._id">
+              <img :src="item.icon"/>
+            </div>
+          </template>
         </el-table-column>
         <el-table-column label="结束时间" prop="enddate"></el-table-column>
 
@@ -67,7 +69,7 @@ export default {
       const res = await getActivityList(this.pageParams)
       this.total = res.data.total
       this.activityList = res.data.data
-    //   console.log(this.activityList)
+      console.log(this.activityList,"sssss")
     },
     //监听编辑活动按钮
     edit(row) {

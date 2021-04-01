@@ -83,7 +83,17 @@ const routes = [{
       {
         path: 'admin_user/list',
         component: () => import('../views/adminUser/AdminUserList.vue')
-      }
+      },
+      // 玩家
+      {
+        path: 'player/list',
+        component: () => import('../views/player/playerList.vue')
+      },
+      // 工单
+      {
+        path: 'workOrder/list',
+        component: () => import('../views/workOrder/workOrderList.vue')
+      },
     ]
   }
 ]

@@ -21,11 +21,14 @@
         </el-form-item>
         <el-form-item label="主要奖励">
           <el-select filterable v-model="model.reward" placeholder="请选择活动奖励" multiple>
-            <el-option v-for="item in itemList" :key="item._id" :label="item.name" :value="item_id"></el-option>
+            <el-option v-for="item in itemList" :key="item._id" :label="item.name" :value="item._id"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="结束时间">
            <el-input v-model="model.enddate"></el-input>
+        </el-form-item>
+        <el-form-item label="跳转链接:">
+          <el-input v-model="model.url"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" native-type="submit">保存</el-button>
@@ -92,7 +95,7 @@ export default {
     async getItemList() {
       const res = await getItemList()
       this.itemList = res.data
-      console.log(this.itemList);
+      console.log(this.itemList)
     }
   },
   created() {

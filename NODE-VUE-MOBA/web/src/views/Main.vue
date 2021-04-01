@@ -48,17 +48,17 @@
                        :loop="false"
                        :height="42"
                        vertical>
-                <van-swipe-item v-for="(actions, i) in category.action_list" :key="i">
+                <van-swipe-item v-for="(actions, i) in category.activite_list" :key="i">
                   <li class="text-center w-100 text-primary">
-                    <p>{{actions.action_name}}</p>
+                    <p>{{actions.title}}</p>
                     <p>
                       <img src="@/assets/images/activity1.png" />
+<!--                       <img src="@/assets/images/activity1.png" />
                       <img src="@/assets/images/activity1.png" />
-                      <img src="@/assets/images/activity1.png" />
-                      <img src="@/assets/images/activity1.png" />
+                      <img src="@/assets/images/activity1.png" /> -->
                     </p>
-                    <p class="text-light">{{actions.action_date}}</p>
-                    <p><img src="@/assets/images/sprite4.png" /></p>
+                    <p class="text-light">{{actions.enddate}}</p>
+                    <p><img src="@/assets/images/sprite4.png" @click="clickImg(actions.url)"/></p>
                   </li>
                 </van-swipe-item>
                 <template #indicator>
@@ -69,142 +69,6 @@
             </van-swipe>
             </div>
           </template>
-<!--           <div class="list_title mb-3">
-            <div class="list_details_title bg-whiteTint text-primary my-3 text-center">
-              <span>活动名称</span>
-              <span>主要奖励</span>
-              <span>结束时间</span>
-              <span></span>
-            </div>
-            <van-swipe class="list_details"
-                       style="height: 200px;"
-                       :loop="false"
-                       :height="42"
-                       vertical>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <van-swipe-item>
-                <li class="text-center w-100 text-primary">
-                  <p>2021新春大礼包111111111111111111111111</p>
-                  <p>
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                    <img src="@/assets/images/activity1.png" />
-                  </p>
-                  <p class="text-light">2021新春大礼包111111111111111111111111</p>
-                  <p><img src="@/assets/images/sprite4.png" /></p>
-                </li>
-              </van-swipe-item>
-              <template #indicator>
-                <div class="list_details_indicator">
-                  <div class="list_details_indicator_actives"></div>
-                </div>
-              </template>
-            </van-swipe>
-          </div> -->
         </Navbar>
       </Menu>
       <!-- 视频推荐 -->
@@ -341,48 +205,7 @@ export default {
       anchorAds: '',
       Brandlist: '',
       TextImgList: '',
-      actioncenter: [
-        {
-          name: '热门推荐',
-          action_list: new Array(10).fill(1).map((v) => ({
-            action_name: '2021新春礼包',
-            action_rewards: 'src="@/assets/images/activity1.png"',
-            action_date: '11天后结束'
-          }))
-        },
-        {
-          name: '新手升级',
-          action_list: new Array(10).fill(1).map((v) => ({
-            action_name: '2022新春礼包',
-            action_rewards: 'src="@/assets/images/activity1.png"',
-            action_date: '11天后结束'
-          }))
-        },
-        {
-          name: '周常活动',
-          action_list: new Array(10).fill(1).map((v) => ({
-            action_name: '2023新春礼包',
-            action_rewards: 'src="@/assets/images/activity1.png"',
-            action_date: '11天后结束'
-          }))
-        },
-        {
-          name: '商城特惠',
-          action_list: new Array(10).fill(1).map((v) => ({
-            action_name: '2024新春礼包',
-            action_rewards: 'src="@/assets/images/activity1.png"',
-            action_date: '11天后结束'
-          }))
-        },
-        {
-          name: '合作活动',
-          action_list: new Array(10).fill(1).map((v) => ({
-            action_name: '2025新春礼包',
-            action_rewards: 'src="@/assets/images/activity1.png"',
-            action_date: '11天后结束'
-          }))
-        }
-      ]
+      actioncenter: ''
     }
   },
 
@@ -400,7 +223,7 @@ export default {
       this.swipeList = JSON.parse(JSON.stringify(data.items))
     },
 
-    // 点击轮播图跳转外部链接
+    // 点击图片跳转外部链接
     clickImg (src) {
       window.location.href = src
     },
@@ -419,11 +242,18 @@ export default {
       this.Brandlist = JSON.parse(JSON.stringify(data.items))
     },
 
-    // 获取品牌专区信息
+    // 获取图文推荐信息
     async fetchTextImg () {
       const res = await this.$http.get('ads')
       const data = res.data.find(item => item.name === '图文推荐')
       this.TextImgList = JSON.parse(JSON.stringify(data.items))
+    },
+
+    // 获取活动中心信息
+    async fetchActivity () {
+      const res = await this.$http.get('activite')
+      this.actioncenter = res.data
+      console.log(this.actioncenter)
     }
   },
 
@@ -433,6 +263,7 @@ export default {
     this.fetchBrandAds()
     this.fetchAnchorAds()
     this.fetchTextImg()
+    this.fetchActivity()
   }
 }
 </script>

@@ -6,7 +6,8 @@ module.exports = app => {
   const Category = mongoose.model('Category')
   const Article = mongoose.model('Article')
   const Hero = mongoose.model('Hero')
-  // const Item = mongoose.model('Item')
+  const Activity = mongoose.model('Activity')
+  const Item = mongoose.model('Item')
   const Strategy = mongoose.model('Strategy')
 
   app.use('/web/api', router)
@@ -66,6 +67,42 @@ module.exports = app => {
         return news
       })
       return cat
+    })
+    res.send(cats)
+  })
+
+  //活动数据接口
+  router.get('/activite', async (req, res) => {
+    //聚合查询>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+    const parent = await Category.findOne({ name: '活动中心' })
+    const cats = await Category.aggregate([
+      { $match: { parent: parent._id } },
+      {
+        $lookup: {
+          from: 'activities',
+          localField: '_id',
+          foreignField: 'cate',
+          as: 'activite_list'
+        }
+      }
+    ])
+    subCates = cats.map(item => {
+      return item._id
+    })
+    // 在最前面插入热门推荐分类
+    cats.unshift({
+      name: '热门推荐',
+      activite_list: await Activity.find().populate('cate').where({
+        cate: { $in: subCates }
+      }).limit(8).lean()
+    })
+    //判断分类是否为热门推荐，如果为热门推荐，则直接取该分类名
+    cats.map(cat => {
+      cat.activite_list.map(activites => {
+        activites.cate_name = cat.name === '热门推荐' ? activites.cate[0].name : cat.name
+        return activites
+      })
+       return cat
     })
     res.send(cats)
   })
