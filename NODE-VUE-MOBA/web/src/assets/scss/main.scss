@@ -206,3 +206,19 @@
   overflow: hidden;
   white-space: nowrap;
 }
+.hero {
+    float: left;
+    width: 18%;
+/*     margin-bottom: 0.32rem;
+    margin-right: 3.75%; */
+    /* text-align: center; */
+    &:nth-child(5n) {
+      margin-right: 0;
+    }
+    .avatar-container {
+      overflow: hidden;
+      .hero-avatar {
+        vertical-align: middle;
+      }
+    }
+  }

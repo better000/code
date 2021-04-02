@@ -9,7 +9,7 @@
                         :key="index">
           <img class="w-100"
                v-lazy="image.img"
-               @click="clickImg(image.url)"/>
+               @click="clickImg(image.url)" />
         </van-swipe-item>
       </van-swipe>
     </div>
@@ -22,9 +22,13 @@
               <ul class="news_bulletin my-3 bg-lightTint text-center fs-ml">
                 <span>{{category.news_list[0].title}}</span>
               </ul>
-              <router-link tag="ul" :to="`/articles/${news._id}`" v-for="(news, i) in category.news_list" :key="i">
+              <router-link tag="ul"
+                           :to="`/articles/${news._id}`"
+                           v-for="(news, i) in category.news_list"
+                           :key="i">
                 <span class="news_date">{{news.createdAt | date}}</span>
-                <span class="news_name" :class="{news_name_color1:news.cate_name==='公告', news_name_color2:news.cate_name==='社区', news_name_color3:news.cate_name==='赛事'}">{{news.cate_name}}</span>
+                <span class="news_name"
+                      :class="{news_name_color1:news.cate_name==='公告', news_name_color2:news.cate_name==='社区', news_name_color3:news.cate_name==='赛事'}">{{news.cate_name}}</span>
                 <span class="mx-1">{{news.title}}</span>
               </router-link>
             </div>
@@ -34,9 +38,10 @@
       </div>
       <!-- 活动中心 -->
       <Menu title="活动中心">
-        <Navbar :categories="actioncenter" class="actions_center">
+        <Navbar :categories="actioncenter"
+                class="actions_center">
           <template #items="{category}">
-            <div class="list_title mb-3">
+            <div class="list_title mb-5">
               <div class="list_details_title bg-whiteTint text-primary my-3 text-center">
                 <span>活动名称</span>
                 <span>主要奖励</span>
@@ -44,30 +49,51 @@
                 <span></span>
               </div>
               <van-swipe class="list_details"
-                       style="height: 200px;"
-                       :loop="false"
-                       :height="42"
-                       vertical>
-                <van-swipe-item v-for="(actions, i) in category.activite_list" :key="i">
+                         style="height: 200px;"
+                         :loop="false"
+                         :height="42"
+                         vertical>
+                <van-swipe-item v-for="(actions, i) in category.activite_list"
+                                :key="i">
                   <li class="text-center w-100 text-primary">
                     <p>{{actions.title}}</p>
                     <p>
                       <img src="@/assets/images/activity1.png" />
-<!--                       <img src="@/assets/images/activity1.png" />
+                      <!--                       <img src="@/assets/images/activity1.png" />
                       <img src="@/assets/images/activity1.png" />
                       <img src="@/assets/images/activity1.png" /> -->
                     </p>
                     <p class="text-light">{{actions.enddate}}</p>
-                    <p><img src="@/assets/images/sprite4.png" @click="clickImg(actions.url)"/></p>
+                    <p><img src="@/assets/images/sprite4.png"
+                           @click="clickImg(actions.url)" /></p>
                   </li>
                 </van-swipe-item>
                 <template #indicator>
-                <div class="list_details_indicator">
-                  <div class="list_details_indicator_actives"></div>
-                </div>
-              </template>
-            </van-swipe>
+                  <div class="list_details_indicator">
+                    <div class="list_details_indicator_actives"></div>
+                  </div>
+                </template>
+              </van-swipe>
             </div>
+          </template>
+        </Navbar>
+      </Menu>
+      <!-- 游戏角色 -->
+      <Menu title="游戏角色">
+        <Navbar :categories="heros" class="actions_center text-primary">
+          <template #items="{category}">
+            <ul class="clearfix">
+              <li class="hero mx-1 text-center"
+                  v-for="item in category.hero_list"
+                  :key="item._id"
+                  @click="heroClick(item._id)">
+                <div class="avatar-container w-100">
+                  <img class="hero-avatar  w-100"
+                       :src="item.avatar" />
+                </div>
+                <h3>{{item.name}}</h3>
+              </li>
+            </ul>
           </template>
         </Navbar>
       </Menu>
@@ -97,16 +123,19 @@
       <!-- 图文推荐 -->
       <Menu title="图文推荐">
         <div>
-          <ul class="tw_list mb-3" v-for="(images, i) in TextImgList" :key="i">
+          <ul class="tw_list mb-3"
+              v-for="(images, i) in TextImgList"
+              :key="i">
             <img class="w-100"
                  :src="images.img">
             <div class="tw_text">
               <span class="tw_text_title text-white fs-ll mb-3">女神枪手三次觉醒百科</span>
               <span class="fs-sl text-tint my-3">配装加点一应俱全</span>
-              <span class="tw_text_btn text-center text-light my-2" @click="clickImg(images.url)">查看</span>
+              <span class="tw_text_btn text-center text-light my-2"
+                    @click="clickImg(images.url)">查看</span>
             </div>
           </ul>
-<!--           <ul class="tw_list mb-3">
+          <!--           <ul class="tw_list mb-3">
             <img class="w-100"
                  src="@/assets/images/picture2.png">
             <div class="tw_text">
@@ -152,7 +181,8 @@
         <div class="mode">
           <ul class="mode_pic d-flex jc-between">
             <img class="w-49"
-                 v-for="(images, i) in anchorAds" :key="i"
+                 v-for="(images, i) in anchorAds"
+                 :key="i"
                  :src="images.img"
                  @click="clickImg(images.url)">
           </ul>
@@ -167,7 +197,8 @@
       <Menu title="品牌专区">
         <div class="brand">
           <img class="w-100"
-               v-for="(images, i) in Brandlist" :key="i"
+               v-for="(images, i) in Brandlist"
+               :key="i"
                :src="images.img"
                @click="clickImg(images.url)">
         </div>
@@ -205,7 +236,44 @@ export default {
       anchorAds: '',
       Brandlist: '',
       TextImgList: '',
-      actioncenter: ''
+      actioncenter: '',
+      heros: [
+        {
+          name: '鬼剑士',
+          hero_list: new Array(20).fill(1).map(v => ({
+            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
+            name: '狂战士'
+          }))
+        },
+        {
+          name: '格斗家',
+          hero_list: new Array(8).fill(1).map(v => ({
+            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
+            name: '散打'
+          }))
+        },
+        {
+          name: '神枪手',
+          hero_list: new Array(8).fill(1).map(v => ({
+            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
+            name: '漫游'
+          }))
+        },
+        {
+          name: '圣职者',
+          hero_list: new Array(8).fill(1).map(v => ({
+            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
+            name: '蓝拳'
+          }))
+        },
+        {
+          name: '魔法师',
+          hero_list: new Array(8).fill(1).map(v => ({
+            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
+            name: '召唤'
+          }))
+        }
+      ]
     }
   },
 
@@ -219,7 +287,7 @@ export default {
     // 获取轮播图信息
     async fetchSwipe () {
       const res = await this.$http.get('ads')
-      const data = res.data.find(item => item.name === '轮播图')
+      const data = res.data.find((item) => item.name === '轮播图')
       this.swipeList = JSON.parse(JSON.stringify(data.items))
     },
 
@@ -228,24 +296,29 @@ export default {
       window.location.href = src
     },
 
+    // 点击跳转角色xiangq
+    heroClick(id) {
+      this.$router.push(`/hero/${id}`)
+    },
+
     // 获取主播栏广告信息
     async fetchAnchorAds () {
       const res = await this.$http.get('ads')
-      const data = res.data.find(item => item.name === '主播栏广告')
+      const data = res.data.find((item) => item.name === '主播栏广告')
       this.anchorAds = JSON.parse(JSON.stringify(data.items))
     },
 
     // 获取品牌专区信息
     async fetchBrandAds () {
       const res = await this.$http.get('ads')
-      const data = res.data.find(item => item.name === '品牌专区')
+      const data = res.data.find((item) => item.name === '品牌专区')
       this.Brandlist = JSON.parse(JSON.stringify(data.items))
     },
 
     // 获取图文推荐信息
     async fetchTextImg () {
       const res = await this.$http.get('ads')
-      const data = res.data.find(item => item.name === '图文推荐')
+      const data = res.data.find((item) => item.name === '图文推荐')
       this.TextImgList = JSON.parse(JSON.stringify(data.items))
     },
 
@@ -253,8 +326,14 @@ export default {
     async fetchActivity () {
       const res = await this.$http.get('activite')
       this.actioncenter = res.data
-      console.log(this.actioncenter)
-    }
+    }/* ,
+
+    // 获取游戏角色信息
+    async fetchHero () {
+      const res = await this.$http.get('heros')
+      this.heros = res.data
+      console.log(this.heros)
+    } */
   },
 
   created () {
@@ -264,6 +343,7 @@ export default {
     this.fetchAnchorAds()
     this.fetchTextImg()
     this.fetchActivity()
+    // this.fetchHero()
   }
 }
 </script>
