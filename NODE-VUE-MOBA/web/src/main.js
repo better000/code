@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import axios from 'axios'
 import './assets/scss/style.scss'
-import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Button, Cell, CellGroup, Image as VanImage } from 'vant'
+import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Button, Cell, CellGroup, Image as VanImage, Popup } from 'vant'
 
 Vue.use(Lazyload)
 Vue.use(Swipe)
@@ -14,6 +14,7 @@ Vue.use(Button)
 Vue.use(VanImage)
 Vue.use(Cell)
 Vue.use(CellGroup)
+Vue.use(Popup)
 
 Vue.config.productionTip = false
 

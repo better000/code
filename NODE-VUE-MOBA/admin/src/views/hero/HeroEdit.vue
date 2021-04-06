@@ -91,7 +91,7 @@
             </el-form-item>
             <el-form-item label="视频">
               <el-upload  class="avatar-uploader" :action="action+'introduction'" :headers="token" :show-file-list="false"
-                :on-success="res => $set(model.shipin, 'video', res.url)" :on-error="uploadErrHandler" :before-upload="beforeUpload">
+                :on-success="res => $set(model.shipin, 'video', res.url)" :on-error="uploadErrHandler">
                 <video class="banner" controls  v-if="model.shipin.video" :src="model.shipin.video"/>
                <i v-else class="el-icon-upload avatar-uploader-icon"></i>  
                
@@ -388,8 +388,8 @@
         // console.log(i);
         this.model.restraint.splice(i, 1)
       },
-       beforeUpload(file) {
-        const isMP4 = file.type === 'pm4';
+/*        beforeUpload(file) {
+        const isMP4 = file.type === 'mp4';
         const isLt100M = file.size / 1024 / 1024 < 100;
         if (!isMP4) {
           this.$message.error('上传视频只能是 MP4 格式!');
@@ -397,8 +397,8 @@
         if (!isLt100M) {
           this.$message.error('上传视频大小不能超过 100MB!');
         }
-        return isJPG && isLt2M;
-      },
+        return isMP4 && isLt100M;
+      }, */
     },
     created() {
       this.id && this.getHero()

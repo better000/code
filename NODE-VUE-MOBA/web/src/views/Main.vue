@@ -237,7 +237,8 @@ export default {
       Brandlist: '',
       TextImgList: '',
       actioncenter: '',
-      heros: [
+      heros: ''
+/*       heros: [
         {
           name: '鬼剑士',
           hero_list: new Array(20).fill(1).map(v => ({
@@ -273,7 +274,7 @@ export default {
             name: '召唤'
           }))
         }
-      ]
+      ] */
     }
   },
 
@@ -296,8 +297,8 @@ export default {
       window.location.href = src
     },
 
-    // 点击跳转角色xiangq
-    heroClick(id) {
+    // 点击跳转角色详情页
+    heroClick (id) {
       this.$router.push(`/hero/${id}`)
     },
 
@@ -326,14 +327,14 @@ export default {
     async fetchActivity () {
       const res = await this.$http.get('activite')
       this.actioncenter = res.data
-    }/* ,
+    },
 
     // 获取游戏角色信息
     async fetchHero () {
       const res = await this.$http.get('heros')
       this.heros = res.data
       console.log(this.heros)
-    } */
+    }
   },
 
   created () {
@@ -343,7 +344,7 @@ export default {
     this.fetchAnchorAds()
     this.fetchTextImg()
     this.fetchActivity()
-    // this.fetchHero()
+    this.fetchHero()
   }
 }
 </script>
