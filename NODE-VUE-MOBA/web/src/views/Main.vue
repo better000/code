@@ -99,25 +99,19 @@
       </Menu>
       <!-- 视频推荐 -->
       <Menu title="视频推荐">
-        <Navbar :categories="newsInformation">
+        <Navbar :categories="shipings" class="actions_center">
+          <template #items="{category}">
           <div class="mb-3">
-            <ul>
+            <ul v-for="(item, index) in category.shiping_list" :key="index">
               <img class="w-100 pt-1 pb-1"
-                   src="@/assets/images/picture1.png">
-              <span class="fs-sl text-primary">DNF20210225版本宣传视频</span>
+                   :src="item.imgs">
+              <span class="fs-sl text-primary">{{item.title}}</span>
               <div class="video_rec pt-2 fs-sm">
-                <span><em></em>5天以前</span>
-              </div>
-            </ul>
-            <ul>
-              <img class="w-100 pt-3 pb-1"
-                   src="@/assets/images/picture1.png">
-              <span class="fs-sl text-primary">DNF20210225版本宣传视频</span>
-              <div class="video_rec pt-2 fs-sm">
-                <span><em></em>5天以前</span>
+                <span><em></em>{{item.data}}</span>
               </div>
             </ul>
           </div>
+          </template>
         </Navbar>
       </Menu>
       <!-- 图文推荐 -->
@@ -135,15 +129,6 @@
                     @click="clickImg(images.url)">查看</span>
             </div>
           </ul>
-          <!--           <ul class="tw_list mb-3">
-            <img class="w-100"
-                 src="@/assets/images/picture2.png">
-            <div class="tw_text">
-              <span class="tw_text_title text-white fs-ll mb-3">女神枪手三次觉醒百科</span>
-              <span class="fs-sl text-tint my-3">配装加点一应俱全</span>
-              <span class="tw_text_btn text-center text-light my-2">查看</span>
-            </div>
-          </ul> -->
         </div>
       </Menu>
       <!-- 明星主播 -->
@@ -236,45 +221,85 @@ export default {
       anchorAds: '',
       Brandlist: '',
       TextImgList: '',
-      actioncenter: '',
-      heros: ''
-/*       heros: [
+      actioncenter: [],
+      heros: [],
+      shipings: [
         {
-          name: '鬼剑士',
-          hero_list: new Array(20).fill(1).map(v => ({
-            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
-            name: '狂战士'
-          }))
+          name: '热门推荐',
+          shiping_list: [
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：告诉我，你们的梦想有多大？无限大！',
+              data: '1天以前'
+            },
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：再靠近一点，我想要和你在一起',
+              data: '1天以前'
+            }
+          ]
         },
         {
-          name: '格斗家',
-          hero_list: new Array(8).fill(1).map(v => ({
-            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
-            name: '散打'
-          }))
+          name: '官方视频',
+          shiping_list: [
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：守护者三觉-帕拉丁技能展示',
+              data: '1天以前'
+            },
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：再靠近一点，我想要和你在一起',
+              data: '1天以前'
+            }
+          ]
         },
         {
-          name: '神枪手',
-          hero_list: new Array(8).fill(1).map(v => ({
-            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
-            name: '漫游'
-          }))
+          name: '攻略视频',
+          shiping_list: [
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：守护者三觉-帕拉丁技能展示',
+              data: '1天以前'
+            },
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：再靠近一点，我想要和你在一起',
+              data: '1天以前'
+            }
+          ]
         },
         {
-          name: '圣职者',
-          hero_list: new Array(8).fill(1).map(v => ({
-            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
-            name: '蓝拳'
-          }))
+          name: '赛事视频',
+          shiping_list: [
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：守护者三觉-帕拉丁技能展示',
+              data: '1天以前'
+            },
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：再靠近一点，我想要和你在一起',
+              data: '1天以前'
+            }
+          ]
         },
         {
-          name: '魔法师',
-          hero_list: new Array(8).fill(1).map(v => ({
-            avatar: 'http://localhost:3333/uploads/heros/650637456334f5130ea954d5a9b27f8e',
-            name: '召唤'
-          }))
+          name: '娱乐杂谈',
+          shiping_list: [
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：守护者三觉-帕拉丁技能展示',
+              data: '1天以前'
+            },
+            {
+              imgs: require('../assets/images/picture1.png'),
+              title: 'DNF：再靠近一点，我想要和你在一起',
+              data: '1天以前'
+            }
+          ]
         }
-      ] */
+      ]
     }
   },
 
