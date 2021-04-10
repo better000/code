@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import Main from '../views/Main.vue'
 import Article from '../views/Article.vue'
 import Hero from '../views/Hero.vue'
+import Service from '../views/Service.vue'
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,11 @@ const routes = [
     name: 'hero',
     component: Hero,
     props: true
+  },
+  {
+    path: '/service',
+    name: 'service',
+    component: Service
   }
 ]
 

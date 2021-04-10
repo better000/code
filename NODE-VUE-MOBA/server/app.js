@@ -27,9 +27,7 @@ require('./routes/admin/login')(app)
 //前端页面请求数据接口
 //require('./routes/web/init')(app)// 快捷录入数据库数据，不要轻易操作
 require('./routes/web/index')(app)
-require('./routes/web/strategy')(app)
-require('./routes/web/race')(app)
-require('./routes/web/common')(app)
+require('./routes/web/login')(app)
 
 // 监听服务器其他错误
 app.use((err, req, res, next) => {

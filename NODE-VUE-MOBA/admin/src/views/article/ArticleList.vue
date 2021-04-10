@@ -3,7 +3,7 @@
     <breadcrumb text="文章列表" />
     <el-card>
       <el-button   type="primary" icon="el-icon-plus" @click="addArticle">添加文章</el-button>
-      <el-table :data="articleList">
+      <el-table :data="articleList" stripe>
         <el-table-column type="index" label="序号"></el-table-column>
         <el-table-column label="所属分类" border stripe>
           <template slot-scope="scope">

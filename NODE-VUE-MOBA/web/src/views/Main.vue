@@ -194,6 +194,11 @@
         <p>腾讯公司 版权所有</p>
       </div>
     </div>
+    <div @click="showPopup" class="service">
+      <img class="ml-3" w-100 src="@/assets/images/service.png" />
+      <div class="text-light">服务中心</div>
+    </div>
+    <van-popup v-model="show" round closeable :style="{ height: '44%', width: '80%' }"><log></log></van-popup>
   </div>
 </template>
 
@@ -202,11 +207,13 @@ import Top from '../components/topTitle.vue'
 import Menu from '../components/menuTitle.vue'
 import Navbar from '../components/navigationBar.vue'
 import dayjs from 'dayjs'
+import log from './Login.vue'
 export default {
   components: {
     Top,
     Menu,
-    Navbar
+    Navbar,
+    log
   },
   filters: {
     date (val) {
@@ -215,6 +222,7 @@ export default {
   },
   data () {
     return {
+      show: false,
       active: 0,
       newsInformation: [],
       swipeList: '',
@@ -359,6 +367,11 @@ export default {
       const res = await this.$http.get('heros')
       this.heros = res.data
       console.log(this.heros)
+    },
+
+    // 服务中心弹出层
+    showPopup () {
+      this.show = true
     }
   },
 

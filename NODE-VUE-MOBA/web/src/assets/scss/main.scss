@@ -219,3 +219,12 @@
       }
     }
   }
+
+// 服务中心
+.service {
+  position:fixed;
+  *position:absolute;
+  top:50%;
+  left:100%;
+  margin:-50px 0 0 -70px;
+}

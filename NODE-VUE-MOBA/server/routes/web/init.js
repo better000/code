@@ -4,9 +4,7 @@ module.exports = app => {
 
   const Category = mongoose.model('Category')
   const Article = mongoose.model('Article')
-  // const Hero = mongoose.model('Hero')
-  // const Item = mongoose.model('Item')
-  // const Strategy = mongoose.model('Strategy')
+
 
   app.use('/web/api', router)
 
@@ -26,21 +24,4 @@ module.exports = app => {
     await Article.insertMany(newsList)
     res.send(newsList)
   })
-/*  router.get('/news/init', async (req, res) => {
-    const parent = await Category.find().where({ name: '新闻资讯' }).lean()
-    const cats = await Category.find().where({ parent: parent }).lean()
-    const data = [{ "title": "DNFxM·A·C魅可限定开售！男团助你释放无限引力", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453406", "date": "04/21" }, { "title": "周一惊喜！老亚瑟答疑带来貂蝉仲夏夜之梦优化消息！", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453311", "date": "04/20" }, { "title": "体验服爆料丨父子相聚，蒙恬将军带着玄雍军阵登场", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=452757", "date": "04/18" }, { "title": "探秘瑶·新皮肤诞生地，敦煌动画正在上映", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=452639", "date": "04/17" }, { "title": "星元部件爆料丨换上新装闪耀舞台，偶像歌手化身魔法少女", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=452545", "date": "04/16" }, { "title": "4月22日全服不停机更新公告", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453529", "date": "04/22" }, { "title": "4月23日抢先服不停机优化公告", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453742", "date": "04/23" }, { "title": "4月22日净化游戏环境声明及处罚公告", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453605", "date": "04/22" }, { "title": "4月22日“演员”惩罚名单", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453606", "date": "04/22" }, { "title": "4月22日外挂专项打击公告", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453610", "date": "04/22" }, { "title": "五五开黑节福利抢先看，王昭君-偶像歌手星元上新", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453393", "date": "04/21" }, { "title": "魔法球更新公告", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453382", "date": "04/21" }, { "title": "充值1元即可开启暖春七日登录好礼", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=452393", "date": "04/16" }, { "title": "天魔缭乱限时返场 多重好礼等你来领", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=451925", "date": "04/13" }, { "title": "橘右京全新史诗皮肤上架 SNK皮肤齐聚峡谷福利大放送", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=450792", "date": "04/07" }, { "title": "【KPL今日预报】广州TTG.XQ vs TS，谁能拿下关键一分？", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=453656", "date": "04/23" }, { "title": "关于责成TS俱乐部就欠薪问题进行说明的通知", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=451887", "date": "04/13" }, { "title": "《一招即浪》第二期：逆天牛魔王最浪打法，城市赛教你一招制敌", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=451060", "date": "04/09" }, { "title": "为战队争夺荣誉！城市联赛战队赛通道报名开启！", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=450775", "date": "04/07" }, { "title": "高校联赛分站赛即将打响 今年又有多少好玩的活动值得期待？", "url": "https://pvp.qq.com/m/m201606/newCont.shtml?newCont.shtml?G_Biz=18&tid=450343", "date": "04/05" }]
-    const newsList = data.map(news => {
-      const randomCats = cats.slice(0).sort((a, b) => Math.random() - 0.5)
-      return {
-        title: news.title,
-        url: news.url,
-        date: news.date,
-        cate: randomCats.slice(0, 2)
-      }
-    })
-    await Article.deleteMany({})
-    await Article.insertMany(newsList)
-    res.send(newsList)
-  }) */
 }

@@ -72,7 +72,7 @@
               <!-- 活动管理 -->
               <el-submenu index="1-4">
                 <template slot="title">
-                  <i class="el-icon-document"></i>活动管理
+                  <i class="el-icon-present"></i>活动管理
                 </template>
                 <!--活动管理二级菜单 -->
                 <el-menu-item-group>
@@ -113,7 +113,7 @@
           <!-- 社区管理 -->
           <el-submenu index="2">
             <template slot="title">
-              <i class="el-icon-office-building"></i>社区管理
+              <i class="el-icon-service"></i>服务管理
             </template>
             <el-menu-item-group>
               <!-- 玩家管理一级菜单 -->
