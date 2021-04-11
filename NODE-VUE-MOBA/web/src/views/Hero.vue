@@ -1,7 +1,7 @@
 <template>
   <div class="page-hero" v-if="heroData">
     <div class="py-2 px-3 d-flex ai-center text-white fs-ml bg-grey">
-      <img src="../assets/images/logo1.png" height="30">
+      <img src="../assets/images/head_top.png" height="36">
       <div class="px-2 flex-1">
         <span>DNF</span>
         <span class="ml-2">角色详解</span>
@@ -138,7 +138,7 @@
     <!-- 角色介绍视频弹层 -->
     <van-popup close-icon="close" position="top" v-model="showVideo">
     <div class="py-2 px-3 d-flex ai-center text-white fs-ml bg-grey">
-      <img src="../assets/images/logo1.png" height="30">
+      <img src="../assets/images/head_top.png" height="36">
       <div class="px-2 flex-1">
         <span>DNF</span>
         <span class="ml-2">角色详解</span>

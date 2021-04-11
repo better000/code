@@ -42,14 +42,13 @@ export default {
     // 登录
     async login () {
       const res = await this.$http.post('login', this.model)
-      console.log(res.data)
       sessionStorage.token = res.data.token
       this.$router.push('/service')
     },
     // 注册
     async register () {
       const res = await this.$http.post('register', this.newmodel)
-      console.log(res.data)
+      console.log(res)
     },
     // 打开登录界面
     ToLogin () {

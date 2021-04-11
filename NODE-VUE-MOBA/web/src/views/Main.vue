@@ -198,7 +198,7 @@
       <img class="ml-3" w-100 src="@/assets/images/service.png" />
       <div class="text-light">服务中心</div>
     </div>
-    <van-popup v-model="show" round closeable :style="{ height: '44%', width: '80%' }"><log></log></van-popup>
+    <van-popup v-model="show" round closeable :style="{ height: '42%', width: '80%' }"><log></log></van-popup>
   </div>
 </template>
 
