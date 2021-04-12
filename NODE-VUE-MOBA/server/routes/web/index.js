@@ -7,6 +7,7 @@ module.exports = app => {
   const Article = mongoose.model('Article')
   const Hero = mongoose.model('Hero')
   const Activity = mongoose.model('Activity')
+  const Player = mongoose.model('Player')
   //const Item = mongoose.model('Item')
 
   app.use('/web/api', router)
@@ -154,4 +155,25 @@ module.exports = app => {
     res.send(await Hero.findById(req.params.id).populate('cate downWind.equipment upWind.equipment partners.hero restrained.hero restraint.hero'))
   })
 
+  // 根据id获取玩家信息
+  router.get('/player/:id', async (req, res) => {
+    const data = await Player.findById(req.params.id)
+    res.send(data)
+  })
+
+  // 编辑玩家信息
+  router.put('/player/:id', async (req, res) => {
+    const model = await Player.findByIdAndUpdate(req.params.id, req.body)
+    res.send(model)
+  })
+
+  // 创建申报信息
+  router.post('/orders', async (req, res) => {
+    try {
+      const model = await Player.create(req.body)
+      res.send(model)
+    } catch (error) {
+      res.status(400).send({ message: '传入的参数有误' })
+    }
+  })
 }

@@ -4,7 +4,7 @@
       <h3>请先登录</h3>
       <input type="text" placeholder="请输入用户名" v-model="model.username">
       <input type="password" placeholder="请输入密码" v-model="model.password">
-      <button v-on:click="login">登录</button>
+      <button :plain="true" v-on:click="login">登录</button>
       <span v-on:click="ToRegister">没有账号？马上注册</span>
     </div>
 
@@ -43,12 +43,22 @@ export default {
     async login () {
       const res = await this.$http.post('login', this.model)
       sessionStorage.token = res.data.token
-      this.$router.push('/service')
+      const id = res.data.id
+      this.$router.push(`/service/${id}`)
+      this.$message({
+        message: '登录成功',
+        type: 'success'
+      })
     },
     // 注册
     async register () {
       const res = await this.$http.post('register', this.newmodel)
+      this.$message({
+        message: '注册成功',
+        type: 'success'
+      })
       console.log(res)
+      this.ToLogin()
     },
     // 打开登录界面
     ToLogin () {

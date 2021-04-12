@@ -28,6 +28,8 @@ require('./routes/admin/login')(app)
 //require('./routes/web/init')(app)// 快捷录入数据库数据，不要轻易操作
 require('./routes/web/index')(app)
 require('./routes/web/login')(app)
+//图片上传接口
+require('./routes/web/imgUpload')(app, multer)
 
 // 监听服务器其他错误
 app.use((err, req, res, next) => {

@@ -17,7 +17,8 @@ module.exports = app => {
     // 2.返回token
     const jwt = require('jsonwebtoken')
     const token = jwt.sign({ id: user._id}, app.get('secret'))
-    res.send({token})
+    const id = user._id
+    res.send({token, id})
   })
 
   app.post('/web/api/register', async (req, res) => {

@@ -3,9 +3,10 @@
     <div class="px-3 d-flex ai-center text-light fs-ml bg-lightTint">
       <img src="../assets/images/head_top.png" height="44"/>
       <h3 class="px-2 flex-1">玩家服务中心</h3>
-      <i class="el-icon-switch-button"></i>
+      <i class="el-icon-switch-button" @click="loginOut"></i>
     </div>
-    <van-notice-bar left-icon="volume-o"  mode="closeable" text="您好，因为检测到您在游戏中存有不良行为，目前您的信用值较低，请尽快申报处理。"/>
+    <van-notice-bar v-if="player.credit === 1" left-icon="volume-o" mode="closeable" text="您好，因为检测到您在游戏中存有不良行为，目前您的信用值较低,请尽快申报处理，以免影响您的游戏体验。"/>
+    <van-notice-bar v-if="player.credit === 0" left-icon="volume-o" mode="closeable" text="您的信用良好，请继续保持，有什么问题请及时向我们反馈哦。"/>
     <div class="mx-2 mt-3 bg-lightTint px-2 py-3">
       <van-cell value="内容" is-link @click="showOrder">
         <template #title>
@@ -26,19 +27,19 @@
     <van-popup v-model="show" round closeable :style="{ height: '34%', width: '80%' }">
       <van-form @submit="onSubmit1" class="m-2">
         <van-field
-          v-model="username"
-          name="用户名"
+          v-model="player.username"
+          name="username"
           label="用户名"
           placeholder="用户名"/>
         <van-field
-          v-model="password"
+          v-model="player.password"
           type="password"
-          name="密码"
+          name="password"
           label="密码"
           placeholder="密码"/>
         <van-field
           v-model="credit"
-          name="信用值"
+          name="credit"
           label="信用值"
           disabled/>
         <div style="margin: 16px;">
@@ -51,7 +52,7 @@
       <van-field
         readonly
         clickable
-        name="picker"
+        name="type"
         :value="value"
         label="申报类型"
         placeholder="点击选择申报类型"
@@ -64,13 +65,13 @@
         autosize
         type="textarea"
         clearable
-        name="申报内容"
+        name="feedback"
         label="申报内容"
         placeholder="请输入具体申报内容"
       />
-      <van-field name="uploader" label="证明材料">
+      <van-field name="material" label="证明材料">
         <template #input>
-          <van-uploader v-model="uploader" />
+          <van-uploader v-model="uploader" :after-read="afterRead"/>
         </template>
       </van-field>
       <van-popup v-model="showPicker" position="bottom">
@@ -111,7 +112,7 @@
       />
       <van-field name="uploader" label="证明材料">
         <template #input>
-          <van-uploader v-model="uploader" />
+          <van-uploader v-model="uploader"/>
         </template>
       </van-field>
       <van-field
@@ -140,6 +141,9 @@
 
 <script>
 export default {
+  props: {
+    id: { required: true }
+  },
   data () {
     return {
       show: false,
@@ -147,8 +151,7 @@ export default {
       orderDetailed: false,
       showPicker: false,
       currentPage: 1,
-      username: '',
-      password: '',
+      player: '',
       credit: '',
       value: '',
       type: ['故障申报', '意见反馈', '举报玩家', '其他问题'],
@@ -166,16 +169,77 @@ export default {
     showproblem () {
       this.problem = true
     },
-    onSubmit1 (values) {
-      console.log('submit1', values)
-    },
     onConfirm (value) {
       this.value = value
       this.showPicker = false
     },
-    onSubmit2 (values) {
-      console.log('submit2', values)
+    // 退出登陆
+    loginOut () {
+      this.$confirm('是否退出登录?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+        center: true
+      }).then(async () => {
+        window.sessionStorage.clear()
+        this.$message({
+          showClose: true,
+          type: 'success',
+          message: '退出成功'
+        })
+        this.$router.push('/')
+      }).catch(() => {
+          this.$message({
+            showClose: true,
+            type: 'info',
+            message: '已取消退出'
+        })
+      })
+    },
+    // 获取玩家数据
+    async fetchplayer () {
+      const res = await this.$http.get(`player/${this.id}`)
+      this.player = res.data
+      this.credit = this.player.credit === 0 ? '信用高' : '黑名单'
+    },
+    // 编辑玩家信息
+    async onSubmit1 (values) {
+      values.credit = this.player.credit
+      const res = await this.$http.put(`player/${this.id}`, values)
+      this.player = res.data
+      this.fetchplayer()
+      this.$message({
+        message: '信息修改成功',
+        type: 'success'
+      })
+      this.show = false
+    },
+
+    // 图片上传
+    async afterRead (file) {
+      console.log(file)
+      const fd = new FormData()
+      fd.append('file', file.file)
+      const res = await this.$http.post('upload/material', fd)
+      console.log(res)
+    },
+
+    // 提交问题申报
+    async onSubmit2 (values) {
+      var params = {
+        applicant: this.id,
+        type: values.type,
+        status: 0,
+        material: values.material,
+        feedback: values.feedback,
+        handle: ''
+      }
+      console.log(params)
+      // const res = await this.$http.post('orders', values)
     }
+  },
+  created () {
+    this.fetchplayer()
   }
 }
 </script>

@@ -5,7 +5,7 @@ import axios from 'axios'
 import './assets/scss/style.scss'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Button, Cell, CellGroup, Image as VanImage, Popup, NoticeBar, Form, Field, Picker, Uploader, Pagination, Tag } from 'vant'
+import { Swipe, SwipeItem, Lazyload, Tab, Tabs, Button, Cell, CellGroup, Image as VanImage, Popup, NoticeBar, Form, Field, Picker, Uploader, Pagination, Tag, Icon } from 'vant'
 
 Vue.use(Lazyload)
 Vue.use(Swipe)
@@ -24,6 +24,7 @@ Vue.use(Picker)
 Vue.use(Uploader)
 Vue.use(Pagination)
 Vue.use(Tag)
+Vue.use(Icon)
 
 Vue.use(ElementUI)
 

@@ -3,13 +3,13 @@
     <Breadcrumb text="玩家列表" />
 
     <el-card>
-      <el-button   type="primary" icon="el-icon-plus" @click="addUser">添加玩家</el-button>
-      <el-table :data="adminUserList" border stripe>
+      <el-button type="primary" icon="el-icon-plus" @click="addplayer">添加玩家</el-button>
+      <el-table :data="playerList" border stripe>
         <el-table-column label="玩家用户名" prop="username"></el-table-column>
-        <el-table-column label="玩家信用" prop="level">
+        <el-table-column label="玩家信用" prop="credit">
            <template slot-scope="scope">
-            <el-tag v-if="+scope.row.level === 1" type="danger">黑名单</el-tag>
-            <el-tag v-if="+scope.row.level === 2" type="success">信用高</el-tag>
+            <el-tag v-if="+scope.row.credit === 1" type="danger">黑名单</el-tag>
+            <el-tag v-if="+scope.row.credit === 0" type="success">信用高</el-tag>
             <span v-else></span>
           </template>
         </el-table-column>
@@ -39,8 +39,8 @@
         </el-form-item>
         <el-form-item label="玩家信用">
           <template>
-            <el-radio v-model="level" label="2">信用高</el-radio>
-            <el-radio v-model="level" label="1">黑名单</el-radio>
+            <el-radio v-model="model.credit" :label="0">信用高</el-radio>
+            <el-radio v-model="model.credit" :label="1">黑名单</el-radio>
           </template>
         </el-form-item>
         <el-form-item label="密码">
@@ -49,7 +49,7 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button   type="primary" @click="ok">确 定</el-button>
+        <el-button type="primary" @click="ok">确 定</el-button>
       </span>
     </el-dialog>
   </div>
@@ -59,14 +59,14 @@
 import Breadcrumb from '../../components/commom/Breadcrumb'
 
 //导入网络请求函数
-import { deleteAdminUser, getAdminUserList, createAdminUser, updateAdminUser, getAdminUser } from 'network/admin/adminUser'
+import { createplayer, getplayer, updateplayer, deleteplayer, getplayerList } from 'network/admin/player'
 
 export default {
-  name: "AdminUserList",
+  name: "PlayerList",
   data() {
     return {
       //分类列表数据
-      adminUserList: [],
+      playerList: [],
       //数据
       model: {},
       dialogVisible: false
@@ -76,37 +76,38 @@ export default {
     Breadcrumb
   },
   methods: {
-    //请求物品列表数据
-    async getAdminUserList() {
-      const res = await getAdminUserList()
-      this.adminUserList = res.data
+    //请求玩家列表数据
+    async getplayerList() {
+      const res = await getplayerList()
+      this.playerList = res.data
+      console.log(this.playerList)
     },
-    addUser() {
+    addplayer() {
       this.dialogVisible = true
     },
-    //监听编辑用户按钮
+    //监听编辑玩家按钮
     async edit(row) {
       this.id = row._id
-      const res = await getAdminUser(this.id)
+      const res = await getplayer(this.id)
       this.model = res.data
       this.dialogVisible = true
     },
     async ok() {
       if (!this.model._id) {
-        const res = await createAdminUser(this.model)
+        const res = await createplayer(this.model)
         if (!res) return
-        this.$message.success('创建用户成功')
-        this.getAdminUserList()
+        this.$message.success('创建玩家成功')
+        this.getplayerList()
         this.dialogVisible = false
       } else {
-        const res = await updateAdminUser(this.id, this.model)
+        const res = await updateplayer(this.id, this.model)
         if (!res) return
-        this.$message.success('编辑用户成功')
-        this.getAdminUserList()
+        this.$message.success('编辑玩家成功')
+        this.getplayerList()
         this.dialogVisible = false
       }
     },
-    //监听删除物品按钮
+    //监听删除玩家
     async _delete(row) {
       try {
 
@@ -116,9 +117,9 @@ export default {
           type: 'warning'
         })
 
-        const res = await deleteAdminUser(row._id)
+        const res = await deleteplayer(row._id)
         this.$message.success(res.data.message)
-        this.getAdminUserList()
+        this.getplayerList()
 
       } catch (error) {
         this.$message.info('已取消删除')
@@ -130,7 +131,7 @@ export default {
     }
   },
   created() {
-    this.getAdminUserList()
+    this.getplayerList()
   }
 }
 </script>
