@@ -8,10 +8,11 @@
     <van-notice-bar v-if="player.credit === 1" left-icon="volume-o" mode="closeable" text="您好，因为检测到您在游戏中存有不良行为，目前您的信用值较低,请尽快申报处理，以免影响您的游戏体验。"/>
     <van-notice-bar v-if="player.credit === 0" left-icon="volume-o" mode="closeable" text="您的信用良好，请继续保持，有什么问题请及时向我们反馈哦。"/>
     <div class="mx-2 mt-3 bg-lightTint px-2 py-3">
-      <van-cell value="内容" is-link @click="showOrder">
+      <van-cell :value= item.feedback is-link @click="showOrder(item._id)" v-for="(item,index) in model" :key="index">
         <template #title>
-          <span class="mr-2">[故障申报]</span>
-          <van-tag type="success">已处理</van-tag>
+          <span class="mr-2">[{{item.type}}]</span>
+          <van-tag v-if="item.status === 0" type="danger">未处理</van-tag>
+          <van-tag v-if="item.status === 1" type="success">已处理</van-tag>
         </template>
       </van-cell>
     </div>
@@ -88,36 +89,36 @@
     </van-form>
     </van-popup>
     <van-popup v-model="orderDetailed" round closeable :style="{ height: '64%', width: '80%' }">
-    <van-form @submit="onSubmit2" class="m-2">
+    <van-form class="m-2">
       <van-field
         readonly
         clickable
-        name="picker"
-        :value="value"
+        :value="faultdetails.type"
         label="申报类型"
-        placeholder="点击选择申报类型"
-        @click="showPicker = true"
       />
       <van-field
         readonly
-        v-model="value1"
+        v-model="faultdetails.feedback"
         show-word-limit
         maxlength="100"
         autosize
         type="textarea"
         clearable
-        name="申报内容"
         label="申报内容"
         placeholder="请输入具体申报内容"
       />
-      <van-field name="uploader" label="证明材料">
+      <van-field name="material" label="证明材料">
         <template #input>
-          <van-uploader v-model="uploader"/>
+          <van-image
+            width="100"
+            height="100"
+            :src="faultdetails.material">
+          </van-image>
         </template>
       </van-field>
       <van-field
         readonly
-        v-model="value1"
+        v-model="faultdetails.handle"
         show-word-limit
         maxlength="100"
         autosize
@@ -156,12 +157,18 @@ export default {
       value: '',
       type: ['故障申报', '意见反馈', '举报玩家', '其他问题'],
       value1: '',
-      uploader: []
+      uploader: [],
+      model: '',
+      faultdetails: ''
     }
   },
   methods: {
-    showOrder () {
+    // 获取申报详情
+    async showOrder (id) {
       this.orderDetailed = true
+      const res = await this.$http.get(`orders/${id}`)
+      this.faultdetails = res.data
+      console.log(this.faultdetails)
     },
     showPopup () {
       this.show = true
@@ -199,8 +206,10 @@ export default {
     // 获取玩家数据
     async fetchplayer () {
       const res = await this.$http.get(`player/${this.id}`)
-      this.player = res.data
+      console.log(res)
+      this.player = res.data.data
       this.credit = this.player.credit === 0 ? '信用高' : '黑名单'
+      this.model = res.data.model
     },
     // 编辑玩家信息
     async onSubmit1 (values) {
@@ -221,7 +230,7 @@ export default {
       const fd = new FormData()
       fd.append('file', file.file)
       const res = await this.$http.post('upload/material', fd)
-      console.log(res)
+      this.$set(this.player, 'material', res.data.url)
     },
 
     // 提交问题申报
@@ -230,12 +239,20 @@ export default {
         applicant: this.id,
         type: values.type,
         status: 0,
-        material: values.material,
+        material: this.player.material,
         feedback: values.feedback,
         handle: ''
       }
-      console.log(params)
-      // const res = await this.$http.post('orders', values)
+      const res = await this.$http.post('orders', params)
+      console.log(res)
+      this.fetchplayer()
+      this.$message({
+        message: '反馈提交成功',
+        type: 'success'
+      })
+      this.problem = false
+      this.value = ''
+      this.value1 = ''
     }
   },
   created () {

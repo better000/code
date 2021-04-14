@@ -93,7 +93,7 @@ const routes = [{
       {
         path: 'workOrder/list',
         component: () => import('../views/workOrder/workOrderList.vue')
-      },
+      }
     ]
   }
 ]

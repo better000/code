@@ -37,9 +37,9 @@ module.exports = app => {
     const total = await req.Model.countDocuments()
     let data
     if (req.query.query) {
-      data = await req.Model.find({ name: req.query.query }).skip(skipNum).limit(pagesize).populate('cate').populate('reward')
+      data = await req.Model.find({ name: req.query.query }).skip(skipNum).limit(pagesize).populate('cate').populate('reward').populate('applicant')
     } else {
-      data = await req.Model.find().skip(skipNum).limit(pagesize).populate('cate').populate('reward')
+      data = await req.Model.find().skip(skipNum).limit(pagesize).populate('cate').populate('reward').populate('applicant')
     }
     res.send({
       total,
@@ -140,7 +140,7 @@ module.exports = app => {
 
   // 通过id查找
   router.get('/:id', async (req, res) => {
-    const model = await req.Model.findById(req.params.id)
+    const model = await req.Model.findById(req.params.id).populate('applicant')
     res.send(model)
   })
 
