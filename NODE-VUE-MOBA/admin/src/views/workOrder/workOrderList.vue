@@ -2,6 +2,13 @@
   <div>
     <breadcrumb text="工单列表" />
     <el-card>
+      <download-excel
+        :fetch= "fetchData"
+        :fields = "json_fields"
+        name = "申报工单.xls">
+        <el-button type="primary" icon="el-icon-printer">导出</el-button>
+      </download-excel>
+
       <el-table :data="orderList" stripe border>
         <el-table-column type="index" label="序号"></el-table-column>
         <el-table-column label="类型" prop="type"></el-table-column>
@@ -51,7 +58,8 @@
         <el-form-item label="证明材料:">
           <el-image 
             style="width: 100px; height: 100px"
-            :src="model.material">
+            :src="model.material"
+            :preview-src-list="srcList">
           </el-image>
         </el-form-item>
         <el-form-item label="处理说明:">
@@ -88,7 +96,16 @@ export default {
       applicant: '',
       id: '',
       status: 1,
-      editDialogVisible: false
+      editDialogVisible: false,
+      srcList: [],
+      applicantQuery: '',
+      json_fields: {
+        类型: 'type',
+        申请人: 'applicant',
+        申报内容: 'handle',
+        状态: 'status',
+        处理说明: 'feedback'
+      }
     }
   },
   components: {
@@ -107,6 +124,7 @@ export default {
       const res = await getOrder(this.id)
       this.model = res.data
       this.applicant = this.model.applicant
+      this.srcList.push(this.model.material)
       this.editDialogVisible = true
     },
     //提交处理
@@ -145,6 +163,12 @@ export default {
       }
 
     },
+    // 搜索工单
+    async searchApplicant() {
+      this.pageParams.query = this.applicantQuery
+      this.pageParams.pagenum = 1
+      this.getOrderList(this.pageParams)
+    },
     handleSizeChange(pagesize) {
       this.pageParams.pagesize = pagesize
       this.getOrderList()
@@ -152,6 +176,16 @@ export default {
     handleCurrentChange(pagenum) {
       this.pageParams.pagenum = pagenum
       this.getOrderList()
+    },
+    // 工单导出
+    fetchData () {
+      const excelList = this.orderList
+      excelList.forEach(function (item) {
+        item.applicant = item.applicant.username
+        item.status = +item.status === 1 ? '未处理' : '已处理'
+      })
+      this.getOrderList()
+      return excelList
     }
   },
   async created() {

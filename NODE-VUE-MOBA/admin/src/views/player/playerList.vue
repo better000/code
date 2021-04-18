@@ -3,7 +3,20 @@
     <Breadcrumb text="玩家列表" />
 
     <el-card>
-      <el-button type="primary" icon="el-icon-plus" @click="addplayer">添加玩家</el-button>
+      <el-row>
+        <el-col :span="3">
+          <el-button type="primary" icon="el-icon-plus" @click="addplayer">添加玩家</el-button>
+        </el-col>
+        <el-col :span="3" >
+          <download-excel
+            :fetch= "fetchData"
+            :fields = "json_fields"
+            name = "申报工单.xls">
+            <el-button type="primary" icon="el-icon-printer">导出玩家名单</el-button>
+          </download-excel>
+        </el-col>
+      </el-row>
+
       <el-table :data="playerList" border stripe>
         <el-table-column label="玩家用户名" prop="username"></el-table-column>
         <el-table-column label="玩家信用" prop="credit">
@@ -69,7 +82,11 @@ export default {
       playerList: [],
       //数据
       model: {},
-      dialogVisible: false
+      dialogVisible: false,
+      json_fields: {
+        玩家用户名: 'username',
+        玩家信用: 'credit'
+      }
     }
   },
   components: {
@@ -80,7 +97,6 @@ export default {
     async getplayerList() {
       const res = await getplayerList()
       this.playerList = res.data
-      console.log(this.playerList)
     },
     addplayer() {
       this.dialogVisible = true
@@ -128,6 +144,15 @@ export default {
     },
     dialogClose() {
       this.model = {}
+    },
+    // 玩家名单导出
+    fetchData () {
+      const excelList = this.playerList
+      excelList.forEach(function (item) {
+        item.credit = +item.credit === 1 ? '黑名单' : '信用高'
+      })
+      this.getplayerList()
+      return excelList
     }
   },
   created() {

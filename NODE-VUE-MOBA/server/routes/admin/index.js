@@ -125,14 +125,14 @@ module.exports = app => {
     }
 
     if (req.Model.modelName === 'Hero') {
-      if (req.query.query) {
-        const model = await Hero.find({ name: req.query.query })
-        res.send(model)
-      } else {
-        const model = await req.Model.find().setOptions(queryOptions)
-        return res.send(model)
+        if (req.query.query) {
+          const model = await Hero.find({ name: req.query.query })
+          res.send(model)
+        } else {
+          const model = await req.Model.find().setOptions(queryOptions)
+          return res.send(model)
+        }
       }
-    }
     const model = await req.Model.find().setOptions(queryOptions)
     res.send(model)
 

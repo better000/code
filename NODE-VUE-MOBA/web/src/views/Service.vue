@@ -16,7 +16,6 @@
         </template>
       </van-cell>
     </div>
-    <van-pagination class="mb-3 mx-2" v-model="currentPage" :total-items="24" :items-per-page="5" />
     <div class="bg-lightTint p-2 mx-2 d-flex">
       <div class="service_foot1 flex-1 mr-2 text-center text-danger" @click="showPopup">
         <h2 class="mt-5 pt-4">玩家信息修改</h2>
@@ -72,7 +71,7 @@
       />
       <van-field name="material" label="证明材料">
         <template #input>
-          <van-uploader v-model="uploader" :after-read="afterRead"/>
+          <van-uploader v-model="uploader" :after-read="afterRead" :max-count="1"/>
         </template>
       </van-field>
       <van-popup v-model="showPicker" position="bottom">
@@ -151,7 +150,6 @@ export default {
       problem: false,
       orderDetailed: false,
       showPicker: false,
-      currentPage: 1,
       player: '',
       credit: '',
       value: '',
@@ -206,7 +204,6 @@ export default {
     // 获取玩家数据
     async fetchplayer () {
       const res = await this.$http.get(`player/${this.id}`)
-      console.log(res)
       this.player = res.data.data
       this.credit = this.player.credit === 0 ? '信用高' : '黑名单'
       this.model = res.data.model
@@ -253,6 +250,7 @@ export default {
       this.problem = false
       this.value = ''
       this.value1 = ''
+      this.uploader = []
     }
   },
   created () {

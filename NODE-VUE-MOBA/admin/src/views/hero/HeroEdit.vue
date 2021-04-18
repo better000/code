@@ -110,23 +110,23 @@
 
           </el-tab-pane>
 
-          <el-tab-pane label="出装推荐">
+          <el-tab-pane label="装备搭配">
             <!-- 顺风出装 -->
-            <el-form-item label="顺风出装">
-              <el-select filterable v-model="model.downWind.equipment" placeholder="请选择顺风出装" multiple>
+            <el-form-item label="刷图出装">
+              <el-select filterable v-model="model.downWind.equipment" placeholder="请选择刷图出装" multiple>
                 <el-option v-for="item in itemList" :key="item._id" :label="item.name" :value="item._id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="顺风技巧">
+            <el-form-item label="刷图技巧">
               <el-input v-model="model.downWind.tips" type="textarea"></el-input>
             </el-form-item>
             <!-- 逆风出装 -->
-            <el-form-item label="逆风出装">
-              <el-select filterable v-model="model.upWind.equipment" placeholder="请选择逆风出装" multiple>
+            <el-form-item label="格斗出装">
+              <el-select filterable v-model="model.upWind.equipment" placeholder="请选择格斗出装" multiple>
                 <el-option v-for="item in itemList" :key="item._id" :label="item.name" :value="item._id"></el-option>
               </el-select>
             </el-form-item>
-            <el-form-item label="逆风技巧">
+            <el-form-item label="格斗技巧">
               <el-input v-model="model.upWind.tips" type="textarea"></el-input>
             </el-form-item>
           </el-tab-pane>
@@ -141,7 +141,7 @@
               <el-input v-model="model.battleTips" type="textarea"></el-input>
             </el-form-item>
             <!-- 团战思路 -->
-            <el-form-item label="团战思路">
+            <el-form-item label="打团思路">
               <el-input v-model="model.teamTips" type="textarea"></el-input>
             </el-form-item>
           </el-tab-pane>

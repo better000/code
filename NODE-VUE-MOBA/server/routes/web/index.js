@@ -9,7 +9,6 @@ module.exports = app => {
   const Activity = mongoose.model('Activity')
   const Player = mongoose.model('Player')
   const Order = mongoose.model('Order')
-  //const Item = mongoose.model('Item')
 
   app.use('/web/api', router)
 
@@ -110,12 +109,6 @@ module.exports = app => {
 
   // 角色列表数据请求接口
   router.get('/heros', async (req, res) => {
-    // const cates = await Category.findOne({
-    //   name: '角色列表'
-    // }).populate({
-    //   path: 'children'
-    // }).lean()
-
     const parent = await Category.findOne({ name: '角色列表' })
     const cates = await Category.aggregate([
       { $match: { parent: parent._id } },
@@ -128,24 +121,10 @@ module.exports = app => {
         }
       }
     ])
-    // const subCates = cates.map(cate => cate._id)
-    // cates.unshift({
-    //   name: '综合',
-    //   hero_list: await Hero.find().where({
-    //     cate: { $in: subCates }
-    //   }).limit(10).lean()
-    // })
     res.send(cates)
   })
 
   //根据id获取文章详情
-/*   router.get('/article/:id', async (req, res) => {
-    const model = await Article.findById(req.params.id).lean()
-    model.related = await Article.find().where({
-      cate: { $in: model.cate }
-    }).skip(1).limit(2)
-    res.send(model)
-  }) */
   router.get('/articles/:id', async (req, res) => {
     const data = await Article.findById(req.params.id)
     res.send(data)
