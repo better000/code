@@ -27,7 +27,7 @@
         </el-table-column>
         <el-table-column type="index" label="序号"></el-table-column>
         <el-table-column label="角色名称" prop="name"></el-table-column>
-        <el-table-column label="角色称号" prop="title"></el-table-column>
+        <el-table-column label="角色觉醒" prop="title"></el-table-column>
         <el-table-column label="所属分类" border stripe>
           <template slot-scope="scope">
             <span>{{scope.row.cate.map(item => item.name).join('/')}}</span>

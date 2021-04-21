@@ -150,15 +150,15 @@
           </ul>
           <ul class="star mb-3">
             <img class="star_pic w-100 h-100"
-                 src="@/assets/images/picture4.jpg">
+                 src="@/assets/images/picture6.jpg">
             <div class="star_text w-100 text-center py-4">
               <van-image class="mt-2"
                          width="7rem"
                          height="7rem"
                          round
-                         :src="require('@/assets/images/picture5.jpg')" />
-              <p class="fs-ll text-white my-3">叨叨叨、</p>
-              <p class="star_heat text-lightWhite mt-3">热度：680840</p>
+                         :src="require('@/assets/images/picture3.jpg')" />
+              <p class="fs-ll text-white my-3">男弹药银狐</p>
+              <p class="star_heat text-lightWhite mt-3">热度：368373</p>
               <p class="star_go text-center bg-brown text-light">直播中</p>
             </div>
           </ul>
@@ -173,8 +173,8 @@
           </ul>
           <ul class="mode_news my-4 text-primary">
             <li class="mode_news_list mb-3">永恒大陆巨龙副本小技巧总结，知道这些做装备更轻松</li>
-            <li class="mode_news_list mb-3">永恒大陆巨龙副本小技巧总结，知道这些做装备更轻松</li>
-            <li class="mode_news_list mb-3">永恒大陆巨龙副本小技巧总结，知道这些做装备更轻松</li>
+            <li class="mode_news_list mb-3">黑鸦之境QA：你想知道的都在这里</li>
+            <li class="mode_news_list mb-3">【起源第八季】狂战士职业玩法解析</li>
           </ul>
         </div>
       </Menu>
@@ -241,8 +241,8 @@ export default {
               data: '1天以前'
             },
             {
-              imgs: require('../assets/images/picture1.png'),
-              title: 'DNF：再靠近一点，我想要和你在一起',
+              imgs: require('../assets/images/picture2.jpg'),
+              title: 'DNF：神 雕 瞎 侣',
               data: '1天以前'
             }
           ]

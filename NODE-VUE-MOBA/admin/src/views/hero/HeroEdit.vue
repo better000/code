@@ -295,7 +295,7 @@
           photo: '',
           scores: {},
           shipin: {},
-         
+          skins: [],
           skills: [],
           downWind: {},
           upWind: {},
